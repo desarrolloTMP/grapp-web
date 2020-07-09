@@ -1,0 +1,36 @@
+{
+    "sass.enabled": false,
+    "sass.compiler": "libsass",
+    "path": {
+        "src/styles/app.scss": {
+            "sass.enabled": true,
+            "sass.options": {
+                "outputDir": "../../UI/css/",
+                "imagePath": null,
+                "sourceComments": false,
+                "outputStyle": "nested"
+            },
+            "linting.collapsed": true
+        },
+        "src/styles/modals.scss": {
+            "sass.enabled": true,
+            "sass.options": {
+                "outputDir": "../../UI/css/",
+                "imagePath": null,
+                "sourceComments": false,
+                "outputStyle": "nested"
+            },
+            "linting.collapsed": true
+        },
+        "src/styles/tables.scss": {
+            "sass.enabled": true,
+            "sass.options": {
+                "outputDir": "../../UI/css/",
+                "imagePath": null,
+                "sourceComments": false,
+                "outputStyle": "nested"
+            },
+            "linting.collapsed": true
+        }
+    }
+}
