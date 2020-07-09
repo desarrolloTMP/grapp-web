@@ -1,0 +1,51 @@
+<div class="table-2">
+  <div class="t2-header">
+    <div class="t2-brief">
+      <div class="t2-title-wrapper">
+        <h2 class="txt-bold">Estadísticas</h2>
+        <div class="t2-label-wrapper">
+          <div class="t2-label -filter" *ngFor="let filter of filtersApplied; let i = index" (click)="removeFilter(i)">
+            {{ displayFilterLabel(filter) }} <img src="/assets/Close.svg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="t2-action-wrapper">
+      <!-- <div class="input2-1 -icon -search">
+                <label> <input required /> <span class="placeholder">Buscar!</span> </label>
+            </div> -->
+      <!-- <button class="btn2-1" (click)="openUser()">Agregar usuario</button> -->
+      <button class="btn2-icon -outline" (click)="openRBarFromTableData()"><img src="/assets/Filter.svg" alt=""/></button>
+    </div>
+  </div>
+  <div class="t2-header">
+    <div style="width: 50%;display:flex;justify-content: center;">
+      <ngx-charts-pie-chart
+        charts
+        [view]="[400]"
+        [legend]="true"
+        [legendTitle]="pieLegendTitle"
+        legendPosition="below"
+        [scheme]="colorScheme"
+        [results]="data()"
+        [gradient]="gradient"
+      >
+      </ngx-charts-pie-chart>
+    </div>
+    <div style="width: 50%; height: 400px;">
+      <ngx-charts-bar-horizontal
+        [view]="[400]"
+        [scheme]="colorScheme"
+        [results]="days()"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="false"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabelDays"
+      >
+      </ngx-charts-bar-horizontal>
+    </div>
+  </div>
+</div>

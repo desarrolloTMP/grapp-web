@@ -1,0 +1,66 @@
+@import '~src/styles/partials/variables';
+@import '~src/styles/partials/mixins';
+::ng-deep {
+  & .datatable-header {
+    border-top: $division;
+    &:hover {
+      cursor: inherit;
+      background-color: $white;
+    }
+  }
+  & .datatable-header-cell {
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  & .datatable-body-row,
+  & .datatable-header {
+    @include flex(row, center);
+    border-bottom: $division;
+    background-color: $white;
+    @include transition(0.25s);
+    &:hover {
+      background-color: darken($bg, 2.5%);
+    }
+
+    &.-red {
+      border: 1px solid $red;
+      background-color: $light-red;
+      &:hover {
+        background-color: darken($light-red, 2.5%);
+      }
+    }
+    &.-orange {
+      border: 1px solid $orange;
+      background-color: $light-orange;
+      &:hover {
+        background-color: darken($light-orange, 7.5%);
+      }
+    }
+    & > * {
+      width: 100%;
+    }
+  }
+
+  & .datatable-body-cell,
+  & .datatable-header-cell {
+    padding: 15px 20px;
+    &.-red,
+    &.-orange {
+      position: relative;
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 7.5px;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: $red;
+        @include transform(translate(-50%));
+      }
+    }
+    &.-orange::before {
+      background-color: $orange;
+    }
+  }
+}

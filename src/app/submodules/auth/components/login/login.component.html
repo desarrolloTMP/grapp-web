@@ -1,0 +1,8 @@
+<ngx-3a-authenticator
+  [options]="options"
+  [status]="status"
+  [defineColor]="'#a77bca'"
+  (userAuthenticated)="userAuth($event)"
+  (userRegistered)="userRegistered($event)"
+  (busy)="handleBusy($event)"
+></ngx-3a-authenticator>

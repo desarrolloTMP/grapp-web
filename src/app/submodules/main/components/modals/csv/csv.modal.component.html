@@ -1,0 +1,40 @@
+<div class="modal2-1 -small">
+  <div class="m21-title-wrapper">
+    <div class="m21-title">
+      <img src="/assets/Document.svg" alt="" />
+      <div class="m21-title-txt">
+        <h2 class="txt-bold">{{ parser.title }}</h2>
+      </div>
+    </div>
+    <button class="btn2-icon -gray" (click)="cancel()"> <img src="/assets/Close-Gray.svg" alt="" /> </button>
+  </div>
+  <div class="m21-body -column">
+    <div class="m21-module">
+      <ngx-3a-forms-basic
+        *ngIf="!parser.progress; else progress"
+        #form
+        [model]="model"
+        [fields]="fields"
+        (submit)="confirm($event)"
+      ></ngx-3a-forms-basic>
+      <ng-template #progress>
+        <div class="m21-col -flex-wrap">
+          <div class="m21-upload -standalone">
+            <span class="m21-upload-progress" [style.width]="parser.progress | async | percent"></span>
+            <p>
+              Importando...
+              <span class="txt-bold">{{ parser.progress | async | percent }} ({{ parser.itemsProccessed | async }} importados)</span></p
+            >
+            <!-- <button class="btn2-icon -gray">
+              <img src="/assets/Close.svg" alt="" />
+            </button> -->
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="m21-action-wrapper" *ngIf="!parser.progress">
+    <button type="button" (click)="cancel()" class="btn2-1 -gray">Cancelar</button>
+    <button type="button" class="btn2-1" (click)="submit()">Iniciar importación</button>
+  </div>
+</div>

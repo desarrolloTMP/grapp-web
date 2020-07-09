@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="29" height="28" viewBox="0 0 29 28">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #a77bca;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="Puase" class="cls-1" d="M3113,706h5a2,2,0,0,1,2,2v24a2,2,0,0,1-2,2h-5a2,2,0,0,1-2-2V708A2,2,0,0,1,3113,706Zm20,0h5a2,2,0,0,1,2,2v24a2,2,0,0,1-2,2h-5a2,2,0,0,1-2-2V708A2,2,0,0,1,3133,706Z" transform="translate(-3111 -706)"/>
+</svg>

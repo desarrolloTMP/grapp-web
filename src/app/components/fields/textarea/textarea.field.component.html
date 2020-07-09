@@ -1,0 +1,13 @@
+<div class="input2-1 -txtarea" style="margin-bottom: 1rem;">
+  <label>
+    <textarea
+      [formControl]="formControl"
+      [formlyAttributes]="field"
+      [style.width]="to['width'] || '100%'"
+      [style.border-color]="showError ? '#f5416f' : ''"
+      (keyup)="autoGrow()"
+      #textArea
+    ></textarea>
+    <span class="placeholder">{{ to.label }}</span>
+  </label>
+</div>

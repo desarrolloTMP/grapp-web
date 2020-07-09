@@ -1,0 +1,139 @@
+<div class="t2-search-wrapper">
+  <!-- Tilte -->
+  <h2 class="txt-bold">Buscar solicitudes de paciente</h2>
+
+  <!-- Filter -->
+  <div class="t2-search">
+    <div class="t2-input-wrapper">
+
+      <!-- Input -->
+      <div class="input2-1">
+        <label>
+          <input
+            [(ngModel)]="queryOptions.document"
+            (keyup.enter)="searchPatient(queryOptions)"
+            required
+          />
+          <span class="placeholder">Documento del paciente</span>
+        </label>
+      </div>
+
+      <button class="btn2-1" (click)="searchPatient(queryOptions)">Buscar</button>
+      <button class="btn2-1" *ngIf="queryOptions.document || selectedPatient" (click)="clearQuery()">Limpiar búsqueda</button>
+    </div>
+    <div class="t2-search-action" *ngIf="!selectedPatient">
+      <button class="btn2-1 -outline" (click)="createOrEditPatient()">Crear nuevo paciente</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Table -->
+<div class="table-2" *ngIf="selectedPatient">
+  <div class="t2-header">
+    <div class="t2-brief">
+
+      <!-- Edit Button -->
+      <button
+        class="btn2-icon"
+        (click)="createOrEditPatient(selectedPatient)"
+      >
+        <img src="/assets/Pencil.svg" alt="" />
+      </button>
+
+      <div class="t2-title-wrapper">
+        <!-- Title -->
+        <div class="t2-title">
+          <h2 class="txt-bold">{{ selectedPatient.name }}</h2>
+          <div class="t2-label" [class.-red]="!selectedPatient.active">{{ selectedPatient.active ? 'Activo' : 'Inactivo' }}</div>
+        </div>
+
+        <!-- Description -->
+        <p>
+          {{ selectedPatient.address.full }}, {{ selectedPatient.address.city }} <br />
+          (+57) {{ selectedPatient.phone }}
+        </p>
+
+      </div>
+    </div>
+
+    <!-- Create Requests Button -->
+    <div class="t2-action-wrapper">
+      <button class="btn2-1 -dark" (click)="createRequest()">Crear solicitud</button>
+    </div>
+  </div>
+
+  <div class="t2-row -header" *ngIf="selectedPatientRequests && selectedPatientRequests.length">
+    <div class="t2-cell -header txt-bold"> Fecha de creación </div>
+    <div class="t2-cell -header txt-bold"> Servicios solicitados </div>
+    <div class="t2-cell -header txt-bold"> Especialidad </div>
+    <div class="t2-cell -header txt-bold"> Tipo </div>
+    <div class="t2-cell -header txt-bold"> Imagen </div>
+  </div>
+
+  <div
+    class="t2-row"
+    *ngFor="let request of selectedPatientRequests"
+    (click)='openRequest(request)'
+  >
+    <!-- Fecha Creacion -->
+    <div class="t2-cell"> {{ request.createdAt | momentFormat: 'DD/MM/YYYY [-] HH:mm' }} </div>
+
+    <!-- Servicios Solicitados -->
+    <div class="t2-cell">
+      <div *ngFor="let service of request.servicesRequested"
+        ><span>- {{ service }}</span></div
+      >
+    </div>
+
+    <!-- Especialidad -->
+    <div class="t2-cell"> {{ request.speciality }} </div>
+
+    <!-- Tipo -->
+    <div class="t2-cell"> {{ request.requestType }} </div>
+
+    <!-- Imagen -->
+    <div class="t2-cell">
+
+      <div class="t2-img-cell" style="width: 10rem;" *ngIf="request.order.file.length > 0">
+        <ng-container *ngFor="let file of request.order.file; let i = index">
+
+          <ng-container *ngIf="requestOrderContext(file) as context ; else smallLoadingPlaceholder">
+
+            <!--IMG [jpg, png] -->
+
+            <div
+              class="t2-cell-img"
+              [style.backgroundImage]="sanitizeStyle(context.image)"
+              (click)="openOrder(context.data, $event, context)"
+              *ngIf="context.image !== null"
+              >
+            </div>
+
+            <!-- No Image -->
+            <div
+              class="t2-cell-img no-img"
+              [style.backgroundImage]="'url(/assets/NotDocumented.svg)'"
+              (click)="$event.stopPropagation()"
+              *ngIf="context.image === null"
+            >
+            </div>
+
+          </ng-container>
+
+          <ng-template #smallLoadingPlaceholder>
+            <div
+            class="t2-cell-img"
+            [style.backgroundImage]="'url(/assets/loading-placeholder.gif)'"
+          ></div>
+          </ng-template>
+
+        </ng-container>
+      </div>
+
+      <div *ngIf="request.order.file.length === 0">
+        <p>Sin soportes</p>
+      </div>
+    </div>
+  </div>
+</div>

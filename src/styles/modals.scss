@@ -1,0 +1,657 @@
+@import './partials/variables';
+@import './partials/mixins';
+
+.modal-space {
+  @include flex(row, center, center);
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba($black, 0);
+  transition: all 0.25s;
+
+  &.-selected {
+    z-index: 999;
+    background-color: rgba($black, 0.8);
+
+    & > * {
+      @include flex(row, center, center);
+      // width: 100%;
+      // height: 100%;
+      transition: 0.25s;
+      top: 0;
+      opacity: 1;
+      width: 100%;
+
+      & > * {
+        transition: 0.25s;
+        top: 0;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.modal-1 {
+  position: relative;
+  @include flex(column);
+  width: 90%;
+  min-width: 350px;
+  max-width: 650px;
+  max-height: 98vh;
+  background: $white;
+  border-radius: 10px;
+
+  &.-wide {
+    width: 90vw;
+
+    & > .m-1-section.-brief {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      padding-right: 20%;
+    }
+  }
+
+  &.-alert {
+    & > .m-1-header {
+      background-color: $white;
+      @include font-size(1.25rem);
+      color: $purple;
+      border-bottom: $division;
+    }
+  }
+
+  & > .m-1-header {
+    @include flex(row, center, space-between);
+    padding: 1.5rem 2.5rem;
+    // color: $white;
+    // background-color: $font;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    & > .m-1-title {
+      @include flex(row, center);
+
+      & > img {
+        height: 2rem;
+        margin-right: 1rem;
+      }
+
+      & > .bold {
+        @include font-size(1.25rem);
+      }
+
+      & > .light {
+        @include font-size(0.75rem);
+      }
+    }
+
+    & > button > img {
+      height: 1rem;
+    }
+  }
+
+  & > .m-1-section {
+    max-height: 100%;
+    padding: 2.5rem;
+    border-bottom: $division;
+    overflow-y: auto;
+
+    &.-brief {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 1rem;
+      grid-row-gap: 2.5rem;
+    }
+
+    & > .bold {
+      margin-bottom: 2.5rem;
+    }
+
+    & > form > * {
+      margin-bottom: 2.5rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  & > form {
+    padding: 1rem 2.5rem;
+  }
+}
+
+.modal2-1 {
+  position: relative;
+  @include flex(column);
+  top: -5%;
+  width: 98%;
+  max-width: 1750px;
+  height: 98%;
+  max-height: 1050px;
+  background-color: $white;
+  border-radius: 20px;
+  opacity: 0;
+  overflow: hidden;
+
+  & > .m21-title-wrapper {
+    @include flex(row, center, space-between);
+    padding: 15px 25px;
+    border-bottom: $division;
+    flex-shrink: 0;
+
+    & > .m21-title {
+      @include flex(row, center);
+
+      & > img {
+        height: 2rem;
+        margin-right: 1rem;
+      }
+
+      & > .m21-title-txt > * {
+        margin-bottom: 0.5rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  &.-small {
+    max-width: 650px;
+    height: auto;
+    max-height: 98%;
+  }
+
+  & > .m21-body {
+    @include flex(row);
+    height: 100%;
+
+    & > .m21-col {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+
+      &:first-child {
+        border-right: $division;
+      }
+
+      &.-flex-wrap {
+        @include flex(column);
+        overflow-y: auto;
+
+        &.-flex {
+          flex: 1;
+          overflow: auto;
+        }
+
+      }
+
+      &.-small {
+        width: 30%;
+        flex-shrink: 0;
+      }
+    }
+
+    &.-column {
+      flex-direction: column;
+      height: auto;
+      max-height: 100%;
+      overflow-y: auto;
+    }
+  }
+
+  & > .m21-action-wrapper {
+    @include flex(row, center, flex-end);
+    padding: 15px 25px;
+    border-top: $division;
+    flex-shrink: 0;
+
+    & > * {
+      margin-right: 0.5rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.m21-timeline {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  grid-column-gap: 0.5rem;
+  grid-row-gap: 0.5rem;
+  align-items: center;
+  padding: 25px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: 15%;
+    left: 40.5px;
+    width: 3px;
+    height: 70%;
+    background-color: $dark-gray;
+  }
+
+  & > .m21-step {
+    position: relative;
+    z-index: 1;
+    width: 35px;
+    height: 35px;
+    background-color: $dark-gray;
+    border-radius: 50%;
+
+    &.-checked {
+      background-color: $purple;
+      background-image: url(/assets/Check.svg);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 40%;
+    }
+
+    &.-next {
+      background-color: $light-purple;
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 42.5px;
+        height: 42.5px;
+        top: 50%;
+        left: 50%;
+        @include transform(translate(-50%, -50%));
+        border: 1px solid $purple;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  & > .m21-step-txt {
+    &.-gray {
+      color: $division-color;
+    }
+  }
+}
+
+.m21-preview {
+  position: relative;
+  flex: 1;
+  width: calc(100% - 50px);
+  margin: 25px 25px 1rem;
+  background-image: url(/assets/Example-Order.png);
+  background-size: cover;
+  background-position: center;
+  border-radius: 15px;
+  overflow: hidden;
+  @include transition(0.25s);
+
+  &::after {
+    content: 'Click para ver orden';
+    position: absolute;
+    @include flex(row, center, center);
+    width: 100%;
+    height: 100%;
+    background-color: rgba($black, 0.5);
+    color: $white;
+    opacity: 0;
+    transition: 0.25s;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+.m21-patient-brief {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 0.5rem;
+  grid-row-gap: 1rem;
+  padding: 0 25px 25px;
+
+  & > button {
+    place-self: center;
+  }
+}
+
+.m21-tabs {
+  @include flex(row);
+  padding: 0 25px;
+  background-color: $dark-gray-2;
+  border-bottom: $division;
+
+  & > * {
+    border-right: $division;
+
+    &:first-child {
+      border-left: $division;
+    }
+
+    &:last-child {
+      border-right: $division;
+    }
+  }
+}
+
+.m21-module {
+  padding: 25px;
+  border-bottom: $division;
+
+  & > * {
+    margin-bottom: 0.75rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.-big {
+    flex: 1;
+    overflow-y: auto;
+  }
+}
+
+.m21-module-title {
+  @include flex(row, center, space-between);
+}
+
+.m21-label-list {
+  @include flex(row, center, space-between);
+  flex-wrap: wrap;
+
+  & > .t2-label {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.m21-comment-space {
+  @include flex(row, stretch);
+  width: 100%;
+  padding: 15px;
+  background-color: $white;
+  border-top: $division;
+
+  & > ngx-3a-forms-basic {
+    width: 100%;
+  }
+
+  & > input {
+    width: 100%;
+  }
+
+  & > * {
+    margin-right: 1rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.input-cus {
+}
+
+.m21-upload {
+  position: absolute;
+  bottom: 163px;
+  @include flex(row, center, space-between);
+  width: 100%;
+  padding: 0 15px;
+  color: $purple;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  background-color: $light-purple;
+  overflow: hidden;
+
+  & > p {
+    position: relative;
+    z-index: 1;
+  }
+
+  & > .m21-upload-progress {
+    position: absolute;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #ebd2ff;
+    transition: 0.25s;
+  }
+
+  & > .m22-upload-progress {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    background-color: darken($light-purple, 5%);
+    transition: 0.25s;
+    -webkit-animation-name: example;
+    /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 4s;
+    /* Safari 4.0 - 8.0 */
+    animation-name: example;
+    animation-duration: 4s;
+    width: 100%;
+  }
+
+  &.-standalone {
+    position: relative;
+    padding: 15px;
+    bottom: auto;
+    border-radius: 10px;
+  }
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+/* Standard syntax */
+@keyframes example {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+.m21-comment {
+  margin-bottom: 1rem;
+  padding: 15px;
+  border: $division;
+  border-radius: 15px;
+
+  .m21-comment-author-wrapper {
+    @include flex(row, center, space-between);
+
+    & > .m21-comment-author {
+      @include flex(row, center);
+      margin-right: 1rem;
+
+      & > .m21-comment-author-label {
+        @include flex(row, center, center);
+        width: 3rem;
+        height: 3rem;
+        margin-right: 0.5rem;
+        border: $division;
+        border-radius: 50%;
+      }
+
+      & > .m21-comment-author-txt > .txt-small {
+        color: $division-color;
+      }
+    }
+  }
+
+  & > p {
+    margin-top: 1rem;
+  }
+
+  &:last-child {
+    // margin-bottom: calc(1rem + 58px);
+  }
+}
+
+.m21-module-action-wrapper {
+  @include flex(row, stretch, space-between);
+
+  &.-only {
+    justify-content: flex-end;
+  }
+}
+
+.modal-executors {
+  @include flex(column);
+  width: 98%;
+  max-width: 850px;
+  height: 98%;
+  max-height: 1250px;
+  background-color: $white;
+  border-radius: 20px;
+
+  & > .me-body {
+    height: 100%;
+    padding: 25px;
+    overflow-y: auto;
+
+    & > .me-title {
+      @include flex(row, center, space-between);
+      margin: 1.5rem 0;
+
+      & > .input2-1 {
+        width: auto;
+      }
+    }
+  }
+
+  & > .me-action-wrapper {
+    @include flex(row, center, flex-end);
+    flex-shrink: 0;
+    padding: 25px;
+    border-top: $division;
+
+    & > * {
+      margin-right: 0.5rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.upload-modal-wrapper {
+  width: 98%;
+  max-width: 1750px;
+  height: 98%;
+  max-height: 1050px;
+  opacity: 0;
+}
+
+.upload-modal {
+  position: relative;
+  @include flex(row, center, space-between);
+  width: 100%;
+  padding: 15px;
+  background-color: $white;
+  border-radius: 15px;
+  overflow: hidden;
+
+  & > .progress {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: $light-purple;
+  }
+
+  & > .um-controls {
+    @include flex(row, center);
+    color: $purple;
+
+    & > button {
+      margin-right: 1rem;
+    }
+  }
+
+  & > button,
+  & > .um-controls {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.patients-modal {
+  width: 100%;
+  padding: 25px;
+  background-color: $white;
+  border-radius: 15px;
+  overflow-y: auto;
+
+  & > h2 {
+    margin-bottom: 1rem;
+  }
+
+  .patient-cups {
+    margin-bottom: 2rem;
+    border: $division;
+    border-radius: 15px;
+
+    & > h3 {
+      margin: 25px;
+    }
+
+    & > .pc-table {
+      & > .pc-t-row {
+        @include flex(row, center);
+        border-bottom: $division;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        & > .pc-t-cell {
+          width: 25%;
+          padding: 10px;
+        }
+      }
+    }
+  }
+
+  & > .pm-action-wrapper {
+    @include flex(row, center, flex-end);
+    border-top: $division;
+    margin-top: 1rem;
+    padding: 25px 25px 0;
+
+    & > * {
+      margin-right: 0.5rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

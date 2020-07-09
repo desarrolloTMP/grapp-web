@@ -1,0 +1,258 @@
+@import './partials/variables';
+@import './partials/mixins';
+
+.t2-search-wrapper {
+  width: 100%;
+  margin-bottom: 2.5%;
+  padding: 25px;
+  background-color: $white;
+  border: $division;
+  border-radius: 15px;
+
+  &>.txt-bold {
+    margin-bottom: 25px;
+  }
+}
+
+.t2-search {
+  @include flex(row, stretch, space-between);
+
+  &>.t2-input-wrapper {
+    @include flex(row, stretch);
+
+    &>* {
+      margin-right: 0.5rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &>.t2-search-action {
+    @include flex(row, stretch);
+
+    &>* {
+      margin-left: 0.5rem;
+
+      &:last-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+.table-2 {
+  width: 100%;
+  padding-bottom: 25px;
+  background-color: $white;
+  border: $division;
+  border-radius: 15px;
+
+  &>.t2-header {
+    @include flex(row, center, space-between);
+    padding: 25px;
+
+    &>.t2-brief {
+      @include flex(row, center);
+
+      &>.t2-title-wrapper>.t2-title {
+        @include flex(row, center);
+
+        &>.t2-label {
+          margin-left: 0.5rem;
+        }
+      }
+
+      &>* {
+        margin-right: 1rem;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    &>.t2-action-wrapper {
+      @include flex(row, stretch);
+
+      &>button {
+        flex-shrink: 0;
+      }
+
+      &>* {
+        margin-right: 0.5rem;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  &>.t2-row {
+    @include flex(row, center);
+    border-bottom: $division;
+    background-color: $white;
+    @include transition(0.25s);
+
+    &:hover {
+      background-color: darken($bg, 2.5%);
+    }
+
+    &.-header {
+      border-top: $division;
+
+      &:hover {
+        cursor: inherit;
+        background-color: $white;
+      }
+
+      &>.t2-cell {
+        text-transform: uppercase;
+      }
+    }
+
+    &.-red {
+      border: 1px solid $red;
+      background-color: $light-red;
+
+      &:hover {
+        background-color: darken($light-red, 2.5%);
+      }
+    }
+
+    &.-orange {
+      border: 1px solid $orange;
+      background-color: $light-orange;
+
+      &:hover {
+        background-color: darken($light-orange, 7.5%);
+      }
+    }
+
+    &>* {
+      width: 100%;
+    }
+  }
+}
+
+.t2-label-wrapper {
+  margin-top: 0.5rem;
+
+  &>.t2-label {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.t2-cell {
+  padding: 15px 20px;
+
+  &.-red,
+  &.-orange {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 7.5px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: $red;
+      @include transform(translate(-50%));
+    }
+  }
+
+  &.-orange::before {
+    background-color: $orange;
+  }
+}
+
+.t2-img-cell {
+  @include flex(row, center);
+}
+
+.t2-cell-img {
+  width: 50px;
+  height: 50px;
+  margin-right: 0.5rem;
+  border: $division;
+  border-radius: 15px;
+  background-image: url(/assets/Example-Photo.png);
+  background-size: cover;
+  background-position: center;
+}
+
+.call-log {
+  @include flex(row, center);
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  border: 1px solid $purple;
+  border-radius: 15px;
+
+  .cl-small,
+  .cl-medium,
+  .cl-big {
+    padding: 25px;
+  }
+
+  &>.cl-small {
+    width: 25%;
+  }
+
+  &>.cl-medium {
+    width: 50%;
+  }
+
+  &>.cl-big {
+    width: 75%;
+  }
+
+  &>div:nth-child(4) {
+    color: $purple;
+  }
+
+  &>div:nth-child(n + 5) {
+    border-top: 1px solid $purple;
+  }
+
+  &.-red {
+    background-color: $light-red;
+    border: 1px solid $red;
+
+    &>div:first-child {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 12.5px;
+        top: 50%;
+        @include transform(translateY(-50%));
+        width: 5px;
+        height: 5px;
+        background-color: $red;
+        border-radius: 50%;
+      }
+    }
+
+    &>div:nth-child(4) {
+      color: $red;
+    }
+  }
+
+  &.enabled{
+    &:hover{
+      cursor: pointer;
+      background-color: $light-purple;
+      transition: background-color 0.5s ease 0s ;
+    }
+  }
+}

@@ -1,0 +1,341 @@
+<div class="upload-modal-wrapper analyst-request">
+  <div class="patients-modal">
+    <div class="patients-modal-content">
+
+      <!-- <h2>Solicitud #{{ simplifyID(request['_id']) }}</h2> -->
+      <div class="patient-cups">
+        <h3>{{ request.name }}</h3>
+
+        <div class="pc-table">
+
+          <div class="pc-t-row">
+            <div class="pc-t-cell-custom-large txt-bold">CUPS</div>
+            <div class="pc-t-cell-custom txt-bold">EJECUTORES</div>
+            <div class="pc-t-cell-custom txt-bold">ESTADO</div>
+            <div class="pc-t-cell-custom txt-bold">PLAZO (En días)</div>
+            <div class="pc-t-cell-custom txt-bold">PRERREQUISITO</div>
+            <div class="pc-t-cell-custom txt-bold">PDF</div>
+            <div class="pc-t-cell-custom txt-bold">PROCESO</div>
+          </div>
+
+          <div class="pc-t-row">
+
+            <!-- CUPS -->
+            <div class="pc-t-cell-custom-large">
+              <input
+                type="text"
+                class="input2-2 input2-2-large"
+                [value]="request.order.cups ? request.order.cups.codeDescription : 'Sin asignar'"
+                [alt]="request.order.cups ? request.order.cups.codeDescription : 'Sin asignar'"
+              />
+            </div>
+
+            <!-- EJECUTORES -->
+            <div class="pc-t-cell-custom">
+              <button class="btn2-2" (click)="openExecutors(request.order, -1)" [ngStyle]="buttonStyle()">
+                {{
+                  request.order.executors && request.order.executors.length
+                  ? request.order.executors[0].name
+                  : 'Asignar Ejecutor'
+                }}
+                {{
+                  request.order.executors && request.order.executors.length > 1
+                  ? ' +' + (request.order.executors.length - 1)
+                  : ''
+                }}
+              </button>
+            </div>
+
+            <!-- ESTADO -->
+            <div class="pc-t-cell-custom">
+              {{ orderStatus(request.order) }}
+            </div>
+
+            <!-- PLAZO (En días) -->
+            <div class="pc-t-cell-custom">
+              <input
+                [ngStyle]="{ width: maxWidthInput === true ? '100%' : '3rem' }"
+                style="text-align: center"
+                type="text"
+                class="input2-2"
+                (focus)="markFocusedOrder(request, -1)"
+                [value]="orderDaysAvailableSinceCreation(request, -1)"
+                (keyup)="applyDaysAvailableChange(request, $event.target.value, -1)"
+                [disabled]="!request.order['markFocus'] && request.order.expirationDate && currentUser && currentUser.userType === 1"
+              />
+              <label style="display: inline-block;width: calc(100% - 3rem);">{{ diffDays(request, -1) }}</label>
+            </div>
+
+            <!-- PRERREQUISITO -->
+            <div class="pc-t-cell-custom">
+              Principal
+            </div>
+
+            <!-- PDF -->
+            <div class="pc-t-cell-custom" *ngIf="request.imported; else elseTemplate">
+              Orden FCN
+            </div>
+
+            <!-- PROCESO -->
+            <div class="pc-t-cell-custom">
+              <button class="btn2-1" (click)="openDetail(request)">Abrir</button>
+            </div>
+
+            <ng-template #elseTemplate>
+              <div class="pc-t-cell-custom">
+                <button class="btn2-1 -outline" (click)="downloadPDF(request.order)" [disabled]="!request.order.cups">{{
+                  request.order.cups ? 'Descargar' : 'No disponible'
+                }}</button>
+              </div>
+            </ng-template>
+          </div>
+
+          <div class="pc-t-row" *ngFor="let suborder of request.suborders; let i = index">
+
+            <!-- CUPS -->
+            <div class="pc-t-cell-custom-large">
+              <input
+                type="text"
+                class="input2-2 input2-2-large"
+                [value]="suborder.cups ? suborder.cups.codeDescription : 'Sin asignar'"
+                [alt]="suborder.cups ? suborder.cups.codeDescription : 'Sin asignar'"
+              />
+            </div>
+
+            <!-- EJECUTORES -->
+            <div class="pc-t-cell-custom">
+              <button class="btn2-2" (click)="openExecutors(suborder, i)" [ngStyle]="buttonStyle(i)"
+                >{{ suborder.executors && suborder.executors.length ? suborder.executors[0].name : 'Asignar Ejecutor'
+                }}{{ suborder.executors && suborder.executors.length > 1 ? ' +' + (suborder.executors.length - 1) : '' }}</button
+              >
+            </div>
+
+            <!-- ESTADO -->
+            <div class="pc-t-cell-custom">
+              {{ orderStatus(suborder) }}
+            </div>
+
+            <!-- PLAZO (En días) -->
+            <div class="pc-t-cell-custom">
+              <input
+                [ngStyle]="{ width: maxWidthInput === true ? '100%' : '3rem' }"
+                style="text-align: center"
+                type="text"
+                class="input2-2"
+                (focus)="markFocusedOrder(request, i)"
+                [value]="orderDaysAvailableSinceCreation(request, i)"
+                (keyup)="applyDaysAvailableChange(request, $event.target.value, i)"
+                [disabled]="
+                  !request.suborders[i]['markFocus'] &&
+                  request.suborders[i].expirationDate &&
+                  currentUser &&
+                  (currentUser.userType === 1 || currentUser['userType'] === '1')
+                "
+              />
+              <div class="txt-small" style="display: inline-block; width: calc(100% - 3rem);">{{ diffDays(request, i) }}</div>
+            </div>
+
+            <!-- PRERREQUISITO -->
+            <div class="pc-t-cell-custom" (mouseenter)="suborder.s = true" (mouseleave)="suborder.s = false">
+              <div class="input2-radio-space" style="margin-bottom: 1rem;">
+                <!-- <p>¿Es prerrequisito?</p> -->
+                <div class="input2-radio-wrapper">
+                  <label class="input2-radio">
+                    <input type="radio" [checked]="suborder.isPrerequisite" />
+                    <span class="checkmark" (click)="suborder.isPrerequisite = true"><p>Sí</p></span>
+                  </label>
+                  <label class="input2-radio">
+                    <input type="radio" [checked]="!suborder.isPrerequisite" />
+                    <span class="checkmark" (click)="suborder.isPrerequisite = false"><p>No</p></span>
+                  </label>
+                </div>
+              </div>
+              <button class="btn2-1 -hide" [class.-active]="!suborder.s" (click)="selectAsMain(i)">Seleccionar como principal</button>
+            </div>
+
+            <!-- PDF -->
+            <div class="pc-t-cell-custom" *ngIf="request.imported; else elseTemplate">
+              Orden FCN
+            </div>
+
+            <!-- Accion -->
+            <div class="pc-t-cell-custom">
+              <button class="btn2-1" (click)="openDetail(request, i)">Abrir</button>
+            </div>
+
+            <!-- Template -->
+            <ng-template #elseTemplate>
+              <div class="pc-t-cell-custom">
+                <button class="btn2-1 -outline" (click)="downloadPDF(suborder,request.order)" [disabled]="!suborder.cups">{{
+                  suborder.cups ? 'Descargar' : 'No disponible'
+                }}</button>
+              </div>
+            </ng-template>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="patient-cups p-3" *ngIf="request.status === 5" >
+        <p>
+          <strong>Justificación de eliminación</strong>
+        </p>
+        <br>
+
+        <p>
+          <strong>Fecha:</strong>&nbsp;
+          {{request.order.deleteObservations.date | date: 'dd/MM/yy, h:mm a'}}
+        </p>
+
+        <p>
+          <strong>Justificación:</strong>&nbsp;
+          {{request.order.deleteObservations.observation}}
+        </p>
+
+        <p>
+          <strong>Elimino:</strong>&nbsp;
+          {{request.order.deleteObservations.userID.name}}
+        </p>
+      </div>
+
+    </div>
+
+    <div class="pm-action-wrapper" *ngIf="request.status < 3; else completed">
+
+      <button
+        class="btn2-1 -rightRose mr-auto"
+        (click)="openConfimationDelete( request )"
+        [disabled]="loadingAction"
+      >
+        Eliminar solicitud
+      </button>
+
+      <button
+        class="btn2-1"
+        (click)="toogleAuthorization(request)"
+        [disabled]="loadingAction"
+      >
+        {{
+          request.order.isAuthorized ? 'Cancelar solicitud' : 'Autorizar solicitud'
+        }}
+      </button>
+
+      <button
+        class="btn2-1"
+        *ngIf="isCompletedFlag"
+        (click)="completeRequest(request, true)"
+        [disabled]="loadingAction"
+      >
+        Finalizar solicitud
+      </button>
+
+      <button class="btn2-1 -gray" (click)="cancel()">Cancelar</button>
+      <button
+        class="btn2-1"
+        (click)="confirm(request)"
+        [disabled]="loadingAction"
+      >
+        Aceptar
+      </button>
+    </div>
+
+    <ng-template #completed>
+      <div class="pm-action-wrapper">
+
+        <button
+          class="btn2-1 -rightRose mr-auto"
+          (click)="openConfimationDelete( request )"
+          [disabled]="loadingAction"
+          *ngIf="request.status !== 5"
+        >
+          Eliminar solicitud
+        </button>
+
+        <button
+          class="btn2-1"
+          (click)="completeRequest(request, false)"
+          [disabled]="loadingAction"
+          *ngIf="request.status !== 5"
+        >
+          Activar solicitud
+        </button>
+
+        <button
+          *ngIf="request.status === 3"
+          class="btn2-1 -gray"
+          (click)="cancel()"
+          [disabled]="loadingAction"
+        >
+          Solicitud completada
+        </button>
+
+        <button
+          *ngIf="request.status === 4"
+          class="btn2-1 -gray"
+          (click)="cancel()"
+          [disabled]="loadingAction"
+        >
+          Solicitud cancelada
+        </button>
+
+        <!-- Deleted Request Status (5) -->
+        <button
+          *ngIf="request.status === 5"
+          class="btn2-1"
+          (click)="undoDeletion(request)"
+        >
+          Restaurar Solicitud
+        </button>
+
+        <button
+          *ngIf="request.status === 5"
+          class="btn2-1 -gray"
+          (click)="cancel()"
+          [disabled]="loadingAction"
+        >
+          Solicitud eliminada
+        </button>
+        <!--+--           --+-->
+
+        <button
+          class="btn2-1"
+          (click)="confirm(request)"
+          [disabled]="loadingAction"
+          *ngIf="request.status !== 5"
+        >
+          Aceptar
+        </button>
+      </div>
+    </ng-template>
+
+  </div>
+
+  <div class="modal-space" [class.-selected]="visible">
+
+    <app-executors-modal
+      *ngIf="event && event.type === 7"
+      [order]="event.payload"
+      (confirmed)="handleAction(event.confirmation, $event)"
+      (canceled)="handleAction(event.cancelation)"
+      (click)="$event.stopPropagation()"
+    ></app-executors-modal>
+
+    <!-- Modal Orden de Solicitud -->
+    <app-order-modal
+      *ngIf="event && event.type === 6"
+      [_order]="event.payload"
+      (confirmed)="handleAction(event.confirmation, $event)"
+      (canceled)="handleAction(event.cancelation)"
+      (click)="$event.stopPropagation()"
+    ></app-order-modal>
+
+    <!-- Modal Orden de Solicitud -->
+    <app-delete-request-modal
+      *ngIf="event && event.type === 10"
+      [_request]="event.payload"
+      (confirmed)="handleAction(event.confirmation, $event)"
+      (canceled)="handlerCandeledDeleteRequest(event)"
+      (click)="$event.stopPropagation()"
+    ></app-delete-request-modal>
+  </div>
+</div>

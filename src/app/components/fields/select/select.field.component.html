@@ -1,0 +1,15 @@
+<div class="input2-1" style="margin-bottom: 1rem;">
+  <label>
+    <span class="fix-label">{{ to.label }}</span>
+    <select
+      *ngIf="options$ | async as ro"
+      [style.border-color]="showError ? '#f5416f' : ''"
+      ng-init="'none'"
+      [formControl]="formControl"
+      [formlyAttributes]="field"
+    >
+      <option value="null">Seleccionar opción</option>
+      <option *ngFor="let option of ro" [value]="option.value">{{ option.label }}</option>
+    </select>
+  </label>
+</div>

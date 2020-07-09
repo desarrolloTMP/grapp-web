@@ -1,0 +1,60 @@
+<div class="table-2" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
+  infiniteScrollContainer=".body-wrapper" [fromRoot]="true" (scrolled)="loadMoreData()">
+  <div class="t2-header">
+    <div class="t2-brief">
+      <div class="t2-title-wrapper">
+        <h2 class="txt-bold">Órdenes asignadas</h2>
+        <div class="t2-label-wrapper">
+
+          <div class="t2-label -filter" *ngFor="let label of filterParsers; let i = index" (click)="removeFilter(i)">
+            <span>{{ label }}</span>
+            <!-- {{ displayFilterLabel(filter) }} -->
+            <img src="/assets/Close.svg" alt="" />
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="t2-action-wrapper">
+      <div class="input2-1 -icon -search">
+        <label> <input required [(ngModel)]="filter_text" /> <span class="placeholder">Buscar</span> </label>
+      </div>
+      <button class="btn2-icon -outline" (click)="openRBarFromTableData()"><img src="/assets/Filter.svg"
+          alt="" /></button>
+    </div>
+  </div>
+  <ngx-3a-datatable style="width: 100%" *ngIf="datatableOptions" [filter]="filter_text"
+    [datatableOptions]="datatableOptions" (rowClicked)="openOrder($event)">
+  </ngx-3a-datatable>
+</div>
+
+<ng-template #dateTemplate let-value="value" let-row="row">
+  {{ date(row.order) | momentFormat: 'DD [de] MMMM, YYYY' }}
+</ng-template>
+
+<ng-template #dateExpirationTemplate let-value="value" let-row="row">
+  <div [ngClass]="diffDaysBar(row.order)" *ngIf="row.order.status !== 1; else elseTemplate">
+    <div class="percentage-txt">
+      <span *ngIf="row.order.expirationDate">{{ diffDays(row.order) }} </span>
+      {{ responseDate(row.order) | momentFormat: 'DD [de] MMMM, YYYY' }}
+    </div>
+    <div *ngIf="row.order.expirationDate" class="percentage-bar">
+      <span
+        [style.width.%]="diffDaysPercentage(row.order)">
+      </span>
+    </div>
+  </div>
+
+  <ng-template #elseTemplate>
+    <label>
+      {{row.order.agenda[0] && row.order.agenda[0].state == 'Fallida' || row.order.agenda[0].state == 'Cancelada' ? 'Cita'+' '+row.order.agenda[0].state : 'Cita agendada para el'+' '+parseDate(row.order.appointmentDate )+' '+'a las'+' '+row.order.appointmentTime || 'N/A (No se ha especificado hora)'  }}
+    </label> 
+      <!-- Cita agendada para el {{ row.order.appointmentDate | momentFormat: 'DD [de] MMMM [de] YYYY' }} a las
+      {{ row.order.appointmentTime || 'N/A (No se ha especificado hora)' }} -->
+  </ng-template>
+
+</ng-template>
+
+<ng-template #statusTemplate let-value="value" let-row="row">
+  <span>{{ row.order.stateColumn }}</span>
+</ng-template>

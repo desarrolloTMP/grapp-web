@@ -1,0 +1,77 @@
+@mixin transform($property) {
+  -webkit-transform: $property;
+  -ms-transform: $property;
+  transform: $property;
+}
+
+@mixin flex($property: null, $align: null, $justify: null) {
+  display: flex;
+  flex-direction: $property;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+@mixin transition($property) {
+  cursor: pointer;
+  transition: all $property;
+}
+
+@mixin font-size($property) {
+  font-size: ($property * 0.729) !important;
+
+  @media (min-width: 900px) {
+    font-size: ($property * 0.81) !important;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: ($property * 0.9) !important;
+  }
+
+  @media (min-width: 1800px) {
+    font-size: $property !important;
+  }
+}
+
+@mixin animation($property, $duration, $loop) {
+  -webkit-animation: $property $duration linear $loop;
+  -moz-animation: $property $duration linear $loop;
+  -o-animation: $property $duration linear $loop;
+  animation: $property $duration linear $loop;
+}
+
+@mixin for-size($range) {
+  $phone-upper-boundary: 600px;
+  $tablet-portrait-upper-boundary: 900px;
+  $tablet-landscape-upper-boundary: 1200px;
+  $desktop-upper-boundary: 1800px;
+
+  @if $range==phone-only {
+    @media (max-width: #{$phone-upper-boundary - 1}) {
+      @content;
+    }
+  }
+
+  @else if $range==tablet-portrait-up {
+    @media (min-width: $phone-upper-boundary) {
+      @content;
+    }
+  }
+
+  @else if $range==tablet-landscape-up {
+    @media (min-width: $tablet-portrait-upper-boundary) {
+      @content;
+    }
+  }
+
+  @else if $range==desktop-up {
+    @media (min-width: $tablet-landscape-upper-boundary) {
+      @content;
+    }
+  }
+
+  @else if $range==big-desktop-up {
+    @media (min-width: $desktop-upper-boundary) {
+      @content;
+    }
+  }
+}

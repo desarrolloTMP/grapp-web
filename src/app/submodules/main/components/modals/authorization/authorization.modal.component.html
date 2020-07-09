@@ -1,0 +1,173 @@
+<div class="modal2-1 authorization-modal">
+  <div class="m21-title-wrapper">
+    <div class="m21-title">
+      <img src="/assets/Document.svg" alt="" />
+      <div class="m21-title-txt">
+        <h2 class="txt-bold">Solicitud #{{ simplifyID(request['_id']) }}</h2>
+      </div>
+    </div>
+    <button class="btn2-icon -gray" (click)="cancel()"> <img src="/assets/Close-Gray.svg" alt="" /> </button>
+  </div>
+
+  <ng-template #smallLoadingPlaceholder>
+    <div
+    class="img-list"
+    [style.backgroundImage]="'url(/assets/loading-placeholder.gif)'"
+  ></div>
+  </ng-template>
+
+  <ng-template #largeLoadingPlaceholder>
+    <div
+    class="img"
+    [style.backgroundImage]="'url(/assets/loading-placeholder.gif)'"
+  ></div>
+  </ng-template>
+
+  <!-- Body -->
+  <div class="m21-body">
+
+    <!-- Left Content -->
+    <div class="m21-col -flex-wrap left-sidebar-content">
+
+      <!-- Image and Decription -->
+
+      <div
+      class="m21-col -flex-wrap img-group"
+      *ngIf="request.order.file.length > 0 && request.order.file[0] !== '' "
+      >
+
+        <!-- Image Preview -->
+        <div
+          class="img"
+          *ngIf="requestOrderContext(request.order.file[_currentImage]) as context; else largeLoadingPlaceholder"
+          [style.backgroundImage]="sanitizePreview(context.image)"
+          (click)="openOrder(context.data, $event, context )"
+          [ngClass]="{'document': isShowAsDocumment }"
+        ></div>
+
+
+        <!-- Thumbnail List -->
+        <div class="list">
+          <div *ngFor="let item of request.order.file; let i = index">
+            <div
+              class="img-list"
+              *ngIf="requestOrderContext(item) as context; else smallLoadingPlaceholder"
+              [style.backgroundImage]="sanitize(context.image)"
+              (click)="currentImage(i)"
+              [style.border]="_currentImage == i ? '2px solid #a77bca' : '0px'"
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="m21-patient-brief">
+        <div>
+          <p class="txt-bold">Nombre del asistente</p>
+          <p class="txt-small">{{ request.createdBy ? request.createdBy.name : "N/R"}}</p>
+        </div>
+        <div>
+          <p class="txt-bold">Observaciones</p>
+          <p class="txt-small">{{ request.observations }}</p>
+        </div>
+      </div>
+      <div class="m21-patient-brief">
+        <div>
+          <p class="txt-bold">Nombre paciente</p>
+          <p class="txt-small">{{ request.patient.name }}</p>
+        </div>
+        <div>
+          <p class="txt-bold">Documento</p>
+          <p class="txt-small">{{ request.patient.document }}</p>
+        </div>
+        <div>
+          <p class="txt-bold">Estado de cuenta</p>
+          <p class="txt-small" *ngIf="selectedPatient" [class.-red]="!selectedPatient.active ">{{selectedPatient ? selectedPatient.active ? 'Activo' : 'Inactivo' : 'N/A'}}</p>
+        </div>
+        <ng-template [ngIf]="showPatientDetails">
+          <div>
+            <p class="txt-bold">Dirección</p>
+            <p class="txt-small">{{ selectedPatient ? selectedPatient.address.full : request.patient.address.full }}, {{ request.patient.address.city }}</p>
+          </div>
+          <div>
+            <p class="txt-bold">Número de cuenta</p>
+            <p class="txt-small">#{{ request.patient.account ? request.patient.account : "N/R"}}</p>
+          </div>
+          <div>
+            <p class="txt-bold">Teléfono</p>
+            <p class="txt-small">(+57) {{ selectedPatient ? selectedPatient.phone : request.patient.phone }}</p>
+          </div>
+          <div>
+            <p class="txt-bold">Fecha de ingreso</p>
+            <p class="txt-small">{{ request.patient.createdAt | momentFormat: 'DD [de] MMMM, YYYY' }}</p>
+          </div>
+          <div>
+            <p class="txt-bold">Correo de contacto</p>
+            <p class="txt-small">{{ selectedPatient ? selectedPatient.email : request.patient.email }}</p>
+          </div>
+        </ng-template>
+        <button
+        *ngIf="request.order.file.length > 0 && request.order.file[0] !== ''"
+          class="btn2-1 -outline"
+          (click)="showPatientDetails = !showPatientDetails"
+        >
+            {{ showPatientDetails ? 'Ocultar detalles' : 'Ver más detalles' }}
+          </button>
+      </div>
+    </div>
+
+    <!-- Form group-->
+    <div class="m21-col form-group">
+      <div class="m21-module">
+
+        <ngx-3a-forms-basic
+          #form
+          [fields]="request.order.isAuthorized ? authorizationFields : authorizationCancelationFields"
+          [model]="request.order"
+          (changed)="verifyFormChange($event)"
+        ></ngx-3a-forms-basic>
+
+        <div class="m21-module-action-wrapper -only">
+          <button
+            *ngIf="request.order.isAuthorized && (!request.suborders || !request.suborders.length)"
+            class="btn2-1 -dark"
+            (click)="addSubOrder()"
+            >Agregar CUPS</button
+          >
+        </div>
+
+      </div>
+
+      <!-- Dinamics Forms -->
+      <ng-container *ngFor="let suborder of request.suborders; let i = index">
+        <div class="m21-module">
+
+          <ngx-3a-forms-basic
+            [fields]="subOrderFields(i)"
+            [model]="suborder"
+            >
+            <!-- (changed)="verifyFormDinamicsChange($event)" -->
+          </ngx-3a-forms-basic>
+
+          <div class="m21-module-action-wrapper">
+            <button class="btn2-icon -red" (click)="removeSubOrder(i)"><img src="/assets/Trash.svg" alt=""/></button>
+            <button *ngIf="i === request.suborders.length - 1" class="btn2-1 -dark" (click)="addSubOrder()"> Agregar CUPS</button>
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="m21-action-wrapper">
+    <button class="btn2-1 -gray" (click)="cancel()">Cancelar</button>
+    <button
+      type="button"
+      [disabled] = "disabled(form)"
+      class="btn2-1"
+      (click)="confirm(request)"
+    >
+      Aceptar
+    </button>
+  </div>
+</div>

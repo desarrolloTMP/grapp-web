@@ -1,0 +1,104 @@
+@import '~src/styles/partials/variables';
+@import '~src/styles/partials/mixins';
+.state-select {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 11pt;
+  background-color: #ffffff;
+  font-weight: 700 !important;
+  @include font-size(1rem);
+  letter-spacing: 0.03rem;
+  white-space: nowrap;
+  border-radius: 5px;
+  border: 0 solid #eaedf3;
+  transition: all 0.25s;
+  cursor: pointer;
+  &:hover {
+    background-color: #fbfbfb;
+    border: 1px solid #eaedf3;
+  }
+  &.-action {
+    // @include font-size(1rem);
+    padding: 11pt;
+    border: none;
+    // background-color: $mc;
+    // color: white;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 5px;
+    // &:hover {
+    //   // background-color: darken($mc, 10%);
+    // }
+    & > .state-list {
+      right: 0;
+      & > .state-option {
+        font-weight: 400;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  & > .state-list {
+    z-index: 100;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 100%;
+    max-height: 0;
+    background-color: white;
+    border: 0px solid #eaedf3;
+    border-radius: 10px;
+    overflow-y: auto;
+    transition: all 0.25s;
+    padding: 0.5rem;
+
+    &.selected {
+      max-height: 100rem;
+      border: 1px solid #eaedf3;
+      // border:  #eaedf3;
+      // box-shadow: $shadow-1-90;
+    }
+
+    & > .state-option {
+      width: 100%;
+      padding: 0.5rem;
+      // color: $font !important;
+      // border-bottom: #eaedf3;
+      border-radius: 0px;
+      transition: all 0.25s;
+      & > span {
+        font-weight: 700;
+      }
+
+      &:hover {
+        background-color: darken(white, 5%);
+      }
+    }
+  }
+
+  & > svg {
+    margin-right: 8px;
+    height: 0.8rem;
+    vertical-align: middle;
+  }
+
+  & > .avatar {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 15px;
+    background-image: url(/assets/Navigation/users.png);
+    background-size: cover;
+    background-position: center center;
+    border-radius: 5px;
+  }
+}
+
+.btn-selected {
+  background: #a77bca;
+  color: #ffffff;
+  &:hover {
+    background: #a77bca !important;
+  }
+}

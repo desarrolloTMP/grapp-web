@@ -1,0 +1,17 @@
+<div class="input2-radio-space" style="margin-bottom: 1rem;">
+  <p>{{ to.label }}</p>
+  <div class="input2-radio-wrapper">
+    <label class="input2-radio">
+      <input type="radio" [checked]="model[key]" #confirmationRadio />
+      <span class="checkmark" (click)="confirm()"
+        ><p>{{ to['confirmationText'] || 'Si' }}</p></span
+      >
+    </label>
+    <label class="input2-radio">
+      <input type="radio" [checked]="!model[key]" #cancelationRadio />
+      <span class="checkmark" (click)="cancel()"
+        ><p>{{ to['cancelationText'] || 'No' }}</p></span
+      >
+    </label>
+  </div>
+</div>

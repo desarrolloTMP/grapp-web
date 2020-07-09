@@ -1,0 +1,42 @@
+<div class="modal-executors">
+  <div class="me-body">
+    <ng-template [ngIf]="preferredExecutors && preferredExecutors.length">
+      <div class="me-title">
+        <h3>Sugeridos</h3>
+      </div>
+      <label class="input2-checkbox-space" *ngFor="let executor of preferredExecutors">
+        <input type="checkbox" [checked]="isSeleceted(executor)" (click)="toogleExecutor(executor)" /> <span class="checkmark"></span>
+        <p>{{ executor.name }}</p>
+      </label>
+    </ng-template>
+    <div class="me-title">
+      <h3>{{ preferredExecutors && preferredExecutors.length ? 'Todos' : 'Ejecutores' }}</h3>
+      <div class="input2-1 -icon -search">
+
+        <label>
+          <input [value]="searchQuery" (keyup)="searchQuery = $event.target.value" required /> <span class="placeholder">Buscar</span>
+        </label>
+      </div>
+    </div>
+    <label class="input2-checkbox-space" *ngFor="let executor of executors | filter: searchQuery">
+      <input type="checkbox" [checked]="isSeleceted(executor, 'exec')" (click)="toogleExecutor(executor)" />
+      <ng-container *ngIf="isNotPreferedAndSelected(executor); else elseTemplate">
+        <span class="checkmark" style="background-color:#f5416f;"></span>
+        <p style="color:#f5416f;">{{ executor.name }}</p>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <span class="checkmark"></span>
+        <p>{{ executor.name }}</p>
+      </ng-template>
+    </label>
+  </div>
+  <div class="input2-error-space" *ngIf="existsNotPreferedAndSelectedExecutors">
+    <div class="input2-error">
+      Hay ejecutores seleccionados que no están asignados a este CUP
+    </div>
+  </div>
+  <div class="me-action-wrapper">
+    <button class="btn2-1 -gray" (click)="cancel()">Cancelar</button>
+    <button class="btn2-1" (click)="confirm(_order)">Aceptar</button>
+  </div>
+</div>

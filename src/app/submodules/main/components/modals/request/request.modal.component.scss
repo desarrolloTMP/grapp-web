@@ -1,0 +1,32 @@
+.request-modal {
+  .m21-module-action-wrapper {
+    .btn2-1.-dark {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      cursor: pointer;
+    }
+  }
+
+  .input2-error-space {
+    .input2-error {
+      display: flex;
+      align-items: center;
+
+      .close-icon {
+        width: 1em;
+        margin-left: auto;
+        cursor: pointer;
+      }
+    }
+
+    &.no-dot {
+      margin-top: 1rem;
+      .input2-error {
+        &::before {
+          content: '';
+        }
+      }
+    }
+  }
+}

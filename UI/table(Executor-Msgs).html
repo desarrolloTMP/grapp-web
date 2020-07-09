@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="./css/app.css">
+    <link rel="stylesheet" type="text/css" href="./css/modals.css">
+    <link rel="stylesheet" type="text/css" href="./css/tables.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <title>GRAPP</title>
+</head>
+
+<body>
+    <div class="r-sidebar">
+        <div class="rs-title -selected">
+            <p class="txt-bold">Editar tabla</p>
+            <button class="btn2-icon -gray"> <img src="../src/assets/Close-Gray.svg" alt=""> </button>
+        </div>
+        <div class="rs-tabs">
+            <div class="t2-tab -selected txt-bold">Filtros</div>
+            <div class="t2-tab txt-bold">Columnas</div>
+        </div>
+        <div class="rs-body">
+            <div class="input2-1">
+                <label>
+                    <input required> <span class="placeholder">Nombre paciente</span> </label>
+            </div>
+            <div class="input2-1">
+                <label>
+                    <input required> <span class="placeholder">Nombre analista</span> </label>
+            </div>
+            <div class="input2-1">
+                <label>
+                    <input required> <span class="placeholder">Fecha de respuesta</span> </label>
+            </div>
+        </div>
+        <div class="rs-action-wrapper">
+            <button class="btn2-1 -gray">Cancelar</button>
+            <button class="btn2-1">Aceptar</button>
+        </div>
+    </div>
+    <div class="modal-space -selected">
+        <div class="modal2-1">
+            <div class="m21-title-wrapper">
+                <div class="m21-title"> <img src="../src/assets/Document.svg" alt="">
+                    <div class="m21-title-txt">
+                        <h2 class="txt-bold">Orden #5646846</h2>
+                        <!--                        Usar -red -orange -purple -->
+                        <div class="t2-label -red">5 días restantes / 10 de Noviembre, 201</div>
+                    </div>
+                </div>
+                <button class="btn2-icon -gray"> <img src="../src/assets/Close-Gray.svg" alt=""> </button>
+            </div>
+            <div class="m21-body">
+                <div class="m21-col -small -flex-wrap">
+                    <div class="m21-timeline">
+                        <div class="m21-step -checked"></div>
+                        <div class="m21-step-txt">
+                            <p class="txt-bold">Orden aprobada</p>
+                            <p class="txt-small">12/12/2019</p>
+                        </div>
+                        <div class="m21-step -checked"></div>
+                        <div class="m21-step-txt">
+                            <p class="txt-bold">Cita Agendada</p>
+                            <p class="txt-small">3 / 3 Intentos</p>
+                        </div>
+                        <div class="m21-step -next"></div>
+                        <div class="m21-step-txt">
+                            <p class="txt-bold">Cita de especialidad #3 - 10/11/2019</p>
+                            <p class="txt-small">Calle 44 #33-66, Consultorio 701</p>
+                        </div>
+                        <div class="m21-step"></div>
+                        <div class="m21-step-txt -gray">
+                            <p class="txt-bold">10 de Noviembre, 2019</p>
+                        </div>
+                    </div>
+                    <div class="m21-patient-brief">
+                        <div>
+                            <p class="txt-bold">Nombre paciente</p>
+                            <p class="txt-small">Felipe Gallego</p>
+                        </div>
+                        <div>
+                            <p class="txt-bold">Dirección</p>
+                            <p class="txt-small">Calle 14#25-20, Bogotá D.C</p>
+                        </div>
+                        <div>
+                            <p class="txt-bold">Teléfono</p>
+                            <p class="txt-small">(+57) 311 528 8213</p>
+                        </div>
+                        <button class="btn2-1 -outline">Ver más detalles</button>
+                    </div>
+                </div>
+                <div class="m21-col  -flex-wrap">
+                    <div class="m21-tabs">
+                        <div class="t2-tab"> Información general </div>
+                        <div class="t2-tab"> Info. de Cita </div>
+                        <div class="t2-tab -selected"> Trazabilidad </div>
+                    </div>
+                    <div class="m21-upload">
+                        <span class="m21-upload-progress"></span>
+                        <p>Subiendo <span class="txt-bold">Document3.pdf</span></p>
+                        <button class="btn2-icon -gray">
+                            <img src="../src/assets/Close.svg" alt="">
+                        </button>
+                    </div>
+                    <div class="m21-comment-space">
+                        <input type="text" placeholder="Escribe aquí...">
+                        <button class="btn21-icon -gray"> <img src="../src/assets/New-Comment-Attach.svg" alt=""> </button>
+                        <button class="btn21-icon -gray"> <img src="../src/assets/Send-Comment.svg" alt=""> </button>
+                    </div>
+                    <div class="m21-module -big">
+                        <div class="m21-comment">
+                            <div class="m21-comment-author-wrapper">
+                                <div class="m21-comment-author">
+                                    <div class="m21-comment-author-label txt-bold"> JC </div>
+                                    <div class="m21-comment-author-txt">
+                                        <p><span class="txt-bold">Juan Carlos Mariño</span> le escribió a <span class="txt-bold">María Daniela Bonilla</span></p>
+                                        <p class="txt-small">10/10/2019</p>
+                                        
+                                    </div>
+                                </div>
+                                <div class="t2-label -filter"> Document2.pdf <img src="../src/assets/Comment-Attach.svg" alt=""> </div>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
+                        </div>
+                        <div class="m21-comment">
+                            <div class="m21-comment-author-wrapper">
+                                <div class="m21-comment-author">
+                                    <div class="m21-comment-author-label txt-bold"> JC </div>
+                                    <div class="m21-comment-author-txt">
+                                        <p><span class="txt-bold">Juan Carlos Mariño</span> le escribió a <span class="txt-bold">María Daniela Bonilla</span></p>
+                                        <p class="txt-small">12/12/2019</p>
+                                        
+                                    </div>
+                                </div>
+                                <div class="t2-label -filter"> Document2.pdf <img src="../src/assets/Comment-Attach.svg" alt=""> </div>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
+                        </div>
+                        <div class="m21-comment">
+                            <div class="m21-comment-author-wrapper">
+                                <div class="m21-comment-author">
+                                    <div class="m21-comment-author-label txt-bold"> JC </div>
+                                    <div class="m21-comment-author-txt">
+                                        <p><span class="txt-bold">Juan Carlos Mariño</span> le escribió a <span class="txt-bold">María Daniela Bonilla</span></p>
+                                        <p class="txt-small">Hace 4 días</p>
+                                        
+                                    </div>
+                                </div>
+                                <div class="t2-label -filter"> Document2.pdf <img src="../src/assets/Comment-Attach.svg" alt=""> </div>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
+                        </div>
+                        <div class="m21-comment">
+                            <div class="m21-comment-author-wrapper">
+                                <div class="m21-comment-author">
+                                    <div class="m21-comment-author-label txt-bold"> JC </div>
+                                    <div class="m21-comment-author-txt">
+                                        <p><span class="txt-bold">Juan Carlos Mariño</span> le escribió a <span class="txt-bold">María Daniela Bonilla</span></p>
+                                        <p class="txt-small">Hace 2 días</p>
+                                        
+                                    </div>
+                                </div>
+                                <div class="t2-label -filter"> Document2.pdf <img src="../src/assets/Comment-Attach.svg" alt=""> </div>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m21-action-wrapper">
+                <button class="btn2-1 -gray">Cancelar</button>
+                <button class="btn2-1">Aceptar</button>
+            </div>
+        </div>
+    </div>
+    <div class="body-wrapper">
+        <div class="table-2">
+            <div class="t2-header">
+                <div class="t2-brief">
+                    <div class="t2-title-wrapper">
+                        <h2 class="txt-bold">Juan Daniel Restrepo Ácila</h2>
+                        <div class="t2-label-wrapper">
+                            <div class="t2-label -filter"> María Daniela García Pratt <img src="../src/assets/Close.svg" alt=""> </div>
+                            <div class="t2-label -filter"> 12/05/2018 - 12/05/2019 <img src="../src/assets/Close.svg" alt=""> </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="t2-action-wrapper">
+                    <div class="input2-1 -icon -search">
+                        <label>
+                            <input required> <span class="placeholder">Buscar</span> </label>
+                    </div>
+                    <button class="btn2-1">Importar órdenes</button>
+                    <button class="btn2-icon -outline"><img src="../src/assets/Filter.svg" alt=""></button>
+                </div>
+            </div>
+            <div class="t2-row -header">
+                <div class="t2-cell -header txt-bold"> Nombre paciente </div>
+                <div class="t2-cell -header txt-bold"> Fecha Ingreso </div>
+                <div class="t2-cell -header txt-bold"> Fecha Máx. respuesta </div>
+            </div>
+            <div class="t2-row -red">
+                <div class="t2-cell -red">Juan Silva Miranda</div>
+                <div class="t2-cell">10 de Octubre, 2019</div>
+                <div class="t2-cell">
+                    <div class="progress-bar -red">
+                        <div class="percentage-txt"> <span>5 días restates </span> / 10 de Noviembre, 2019 </div>
+                        <div class="percentage-bar"> <span></span> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="t2-row -orange">
+                <div class="t2-cell -orange">Juan Silva Miranda</div>
+                <div class="t2-cell">10 de Octubre, 2019</div>
+                <div class="t2-cell">
+                    <div class="progress-bar -orange">
+                        <div class="percentage-txt"> <span>8 días restates </span> / 13 de Noviembre, 2019 </div>
+                        <div class="percentage-bar"> <span></span> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="t2-row">
+                <div class="t2-cell">Juan Silva Miranda</div>
+                <div class="t2-cell">10 de Octubre, 2019</div>
+                <div class="t2-cell">
+                    <div class="progress-bar">
+                        <div class="percentage-txt"> <span>10 días restates </span> / 15 de Noviembre, 2019 </div>
+                        <div class="percentage-bar"> <span></span> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="t2-row">
+                <div class="t2-cell">Juan Silva Miranda</div>
+                <div class="t2-cell">10 de Octubre, 2019</div>
+                <div class="t2-cell">
+                    <div class="progress-bar">
+                        <div class="percentage-txt"> <span>10 días restates </span> / 15 de Noviembre, 2019 </div>
+                        <div class="percentage-bar"> <span></span> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="t2-row">
+                <div class="t2-cell">Juan Silva Miranda</div>
+                <div class="t2-cell">10 de Octubre, 2019</div>
+                <div class="t2-cell">
+                    <div class="progress-bar">
+                        <div class="percentage-txt"> <span>10 días restates </span> / 15 de Noviembre, 2019 </div>
+                        <div class="percentage-bar"> <span></span> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="t2-row">
+                <div class="t2-cell">Juan Silva Miranda</div>
+                <div class="t2-cell">10 de Octubre, 2019</div>
+                <div class="t2-cell">
+                    <div class="progress-bar">
+                        <div class="percentage-txt"> <span>10 días restates </span> / 15 de Noviembre, 2019 </div>
+                        <div class="percentage-bar"> <span></span> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

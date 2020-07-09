@@ -1,0 +1,44 @@
+<div
+  class="table-2"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  infiniteScrollContainer=".body-wrapper"
+  [fromRoot]="true"
+  (scrolled)="loadMoreData()"
+>
+  <div class="t2-header">
+    <div class="t2-brief">
+      <div class="t2-title-wrapper">
+        <h2 class="txt-bold">Pacientes</h2>
+        <div class="t2-label-wrapper">
+          <div class="t2-label -filter" *ngFor="let label of filterParsers; let i = index" (click)="removeFilter(i)">
+            <span>{{ label }}</span>
+            <img src="/assets/Close.svg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="t2-action-wrapper">
+      <!-- <div class="input2-1 -icon -search">
+        <label> <input required [(ngModel)]="filter_text" /> <span class="placeholder">Buscar</span> </label>
+      </div> -->
+      <button class="btn2-1" (click)="exportExcel()" [disabled]="exporting">{{ exporting ? 'Preparando...' : 'Exportar a Excel'}}</button>
+      <button class="btn2-1" (click)="openImport()">Importar pacientes (CSV)</button>
+      <button class="btn2-1" (click)="openUser()">Agregar paciente</button>
+      <button class="btn2-icon -outline" (click)="openRBarFromTableData()"><img src="/assets/Filter.svg" alt=""/></button>
+    </div>
+  </div>
+  <ngx-3a-datatable
+    *ngIf="datatableOptions"
+    [filter]="filter_text"
+    [datatableOptions]="datatableOptions"
+    (rowClicked)="openUser($event)"
+  ></ngx-3a-datatable>
+</div>
+<ng-template #dateTemplate let-value="value">
+  {{ value | momentFormat: 'DD [de] MMMM, YYYY' }}
+</ng-template>
+<ng-template #userActiveTemplate let-value="value">
+  <div class="txt-small" [class.-red]="!value">{{ value ? 'Activo' : 'Inactivo' }}</div>
+</ng-template>

@@ -1,0 +1,51 @@
+.analyst-request {
+  .patients-modal {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
+
+    .patients-modal-content {
+      flex: 1;
+      padding: 25px;
+      overflow-y: auto;
+    }
+  }
+
+  .pc-t-cell-custom-large {
+    width: 60%;
+    padding: 10px;
+  }
+
+  .pc-t-cell-custom {
+    width: 20%;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .input2-2-large {
+    width: 100%;
+  }
+
+  .modal-space {
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .modal-space * {
+    width: 100%;
+    height: 100%;
+  }
+
+  .-hide {
+    transition: all 0.25s;
+    &.-active {
+      height: 0;
+      width: 0;
+      pointer-events: none;
+      padding: 0;
+    }
+  }
+}

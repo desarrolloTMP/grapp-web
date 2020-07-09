@@ -1,0 +1,73 @@
+<div
+  class="table-2"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  infiniteScrollContainer=".body-wrapper"
+  [fromRoot]="true"
+  (scrolled)="loadMoreData()"
+>
+  <div class="t2-header">
+    <div class="t2-brief">
+      <div class="t2-title-wrapper">
+        <h2 class="txt-bold">Solicitudes</h2>
+        <div class="t2-label-wrapper">
+
+          <div class="t2-label -filter"
+              *ngFor="let label of filterParsers; let i = index"
+              (click)="removeFilter(i)">
+            <span>{{ label }}</span>
+            <img src="/assets/Close.svg" alt="" />
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="t2-action-wrapper">
+      <div class="input2-1 -icon -search">
+        <label> <input required [(ngModel)]="filter_text" /> <span class="placeholder">Buscar</span> </label>
+      </div>
+      <button class="btn2-icon -outline" (click)="openRBarFromTableData()"><img src="/assets/Filter.svg" alt=""/></button>
+    </div>
+  </div>
+
+  <ngx-3a-datatable
+    *ngIf="datatableOptions"
+    [filter]="filter_text"
+    [datatableOptions]="datatableOptions"
+    (rowClicked)="openRequest($event)"
+  >
+  </ngx-3a-datatable>
+
+</div>
+
+<ng-template #dateTemplate let-value="value">
+  {{ value | momentFormat: 'DD [de] MMMM, YYYY' }}
+</ng-template>
+
+<ng-template #dateExpirationTemplate let-value="value" let-row="row">
+  <div *ngIf="value; else noValue" [ngClass]="diffDaysBar(row)">
+    <div class="percentage-txt">
+      <span>{{ diffDays(row) }} </span> {{ responseDate(row) | momentFormat: 'DD [de] MMMM, YYYY' }}
+    </div>
+    <div class="percentage-bar"> <span [style.width.%]="diffDaysPercentage(row)"></span> </div>
+  </div>
+
+  <ng-template #noValue>
+    <div>
+      <div class="percentage-txt">
+        <span>Sin asignar</span>
+      </div>
+    </div>
+  </ng-template>
+
+</ng-template>
+
+<ng-template #cumplimientoTemplate let-value="value" let-row="row">
+  <span>{{ getCumplimientoOrders(row) }}</span>
+</ng-template>
+
+<ng-template #estadoTemplate let-value="value" let-row="row">
+  <span>{{ statusTemplate(row) }}</span>
+</ng-template>

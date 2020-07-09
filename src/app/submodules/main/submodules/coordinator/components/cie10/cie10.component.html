@@ -1,0 +1,50 @@
+<div
+  class="table-2"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  infiniteScrollContainer=".body-wrapper"
+  [fromRoot]="true"
+
+  (scrolled)="handlerScroll()"
+>
+  <div class="t2-header">
+    <div class="t2-brief">
+      <div class="t2-title-wrapper">
+        <h2 class="txt-bold">Códigos CIE10</h2>
+      </div>
+    </div>
+    <div class="t2-action-wrapper">
+
+      <!-- Search Input -->
+      <div class="input2-1 -icon -search">
+        <label>
+          <input required (keyup)="handlerSearch($event)" />
+          <span class="placeholder">Buscar</span>
+        </label>
+      </div>
+
+      <!-- Export Button -->
+      <button
+        class="btn2-1"
+        (click)="exportExcel()"
+        [disabled]="exporting">
+          {{ exporting ? 'Preparando...' : 'Exportar a Excel' }}
+      </button>
+
+      <!-- Import Button -->
+      <button
+        class="btn2-1"
+        (click)="openImport()"
+      >Importar CIE10 (CSV)</button>
+
+    </div>
+  </div>
+  <ngx-3a-datatable *ngIf="datatableOptions" [filter]="filter_text" [datatableOptions]="datatableOptions"></ngx-3a-datatable>
+</div>
+<ng-template #dateTemplate let-value="value">
+  {{ value | momentFormat: 'DD [de] MMMM, YYYY' }}
+</ng-template>
+<ng-template #booleanTemplate let-value="value">
+  {{ value ? 'Sí' : 'No' }}
+</ng-template>

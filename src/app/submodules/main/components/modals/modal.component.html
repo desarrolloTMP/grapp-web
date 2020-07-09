@@ -1,0 +1,88 @@
+<div class="modal-space" *ngIf="event && event.type !== -1" [class.-selected]="visible" [ngSwitch]="event.type">
+  <app-request-modal
+    *ngSwitchCase="0"
+    [_alert]="_errorMessages"
+    [_request]="event.payload"
+    (confirmed)="handleAction(event.confirmation, $event)"
+    (canceled)="handleAction(event.cancelation)"
+    (click)="$event.stopPropagation()"
+    class="-small"
+  ></app-request-modal>
+
+  <app-patient-modal
+    *ngSwitchCase="1"
+    [_patient]="event.payload"
+    (confirmed)="handleAction(event.confirmation, $event)"
+    (canceled)="handleAction(event.cancelation)"
+    (click)="$event.stopPropagation()"
+    class="-small"
+  ></app-patient-modal>
+
+  <app-authorization-modal
+    *ngSwitchCase="2"
+    [_request]="event.payload"
+    (confirmed)="handleAction(event.confirmation, $event)"
+    (canceled)="handleAction(event.cancelation)"
+    (click)="$event.stopPropagation()"
+  ></app-authorization-modal>
+
+  <app-user-modal
+    *ngSwitchCase="3"
+    [_user]="event.payload"
+    (confirmed)="handleAction(event.confirmation, $event)"
+    (canceled)="handleAction(event.cancelation)"
+    (click)="$event.stopPropagation()"
+    class="-small"
+  ></app-user-modal>
+
+  <app-csv-modal
+    *ngSwitchCase="4"
+    [_parser]="event.payload"
+    (confirmed)="handleAction(event.confirmation, $event)"
+    (canceled)="handleAction(event.cancelation)"
+    (click)="$event.stopPropagation()"
+    class="-small"
+  ></app-csv-modal>
+
+  <app-analyst-request-modal
+    *ngSwitchCase="5"
+    [_request]="event.payload"
+    (confirmed)="handleAction(event.confirmation, $event)"
+    (canceled)="handleAction(event.cancelation)"
+    (click)="$event.stopPropagation()"
+  ></app-analyst-request-modal>
+
+  <!-- Order Modal -->
+  <app-order-modal
+    *ngSwitchCase="6"
+    [_order]="event.payload"
+    (confirmed)="handleAction(event.confirmation, $event)"
+    (canceled)="handleAction(event.cancelation)"
+    (click)="$event.stopPropagation()"
+  ></app-order-modal>
+
+
+  <app-cups-modal
+    *ngSwitchCase="9"
+    [_cups]="event.payload"
+    (confirmed)="handleAction(event.confirmation, $event)"
+    (canceled)="handleAction(event.cancelation)"
+    (click)="$event.stopPropagation()"
+  ></app-cups-modal>
+
+</div>
+
+<div class="modal-space" *ngIf="alert" [class.selected]="alertVisible">
+  <div class="alert-modal" (click)="$event.stopPropagation()">
+    <div class="montserrat">{{ alert.title }}</div>
+    <div [innerHTML]="alert.content"></div>
+    <div class="button-space">
+      <button *ngIf="alert.cancelation" class="btn-1 gray" (click)="handleAction(alert.cancelation, false)">{{
+        alert.cancelation.text
+      }}</button>
+      <button class="btn-1" (click)="handleAction(alert.confirmation, true)">{{
+        alert.confirmation ? alert.confirmation.text : 'OK'
+      }}</button>
+    </div>
+  </div>
+</div>

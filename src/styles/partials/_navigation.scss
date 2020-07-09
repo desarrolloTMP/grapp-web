@@ -1,0 +1,212 @@
+.navbar {
+  z-index: 998;
+  position: fixed;
+  top: 0;
+  left: 0;
+  @include flex(row, center, space-between);
+  width: 100%;
+  height: 5rem;
+  padding: 1px 15px;
+  background-color: $white;
+  border-bottom: $division;
+
+  &.-scroll {
+    box-shadow: $shadow-1-90;
+  }
+
+  & > img {
+    width: auto;
+    height: 80%;
+  }
+
+  & > .nav-wrapper {
+    @include flex(row, center, flex-end);
+    display: none;
+    width: 100%;
+    height: 100%;
+
+    & > button {
+      margin-right: 10px;
+      border: 1px solid $white;
+      height: 100%;
+
+      &:hover,
+      &.selected {
+        border: $division;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      & > svg {
+        max-height: 50%;
+        width: 20%;
+      }
+    }
+  }
+
+  @include for-size(tablet-landscape-up) {
+    & > .nav-wrapper {
+      display: flex;
+    }
+
+    & > .btn-3 {
+      display: none;
+    }
+  }
+}
+
+.h-menu {
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: $white;
+  overflow-y: auto;
+  opacity: 0;
+  transition: all 0.25s;
+
+  & > .h-bar {
+    @include flex(row, center, flex-end);
+    background-color: $bg;
+    padding: 0.5rem;
+    cursor: pointer;
+
+    & > svg {
+      height: 1rem;
+    }
+  }
+
+  & > .h-menu-option {
+    width: 100%;
+    justify-content: center;
+    padding: 5% 2%;
+    border-bottom: $division;
+    text-align: center;
+    transition: all 0.25s;
+
+    &:hover {
+      background-color: darken($bg, 2%);
+    }
+  }
+
+  &.selected {
+    z-index: 2000;
+    opacity: 1;
+  }
+}
+
+.content-wrapper {
+  width: 100%;
+  height: calc(100%-5rem);
+  padding-top: 5rem;
+
+  &.-vt {
+    padding-left: 10%;
+  }
+
+  @include for-size(tablet-portrait-up) {
+    &.-vt {
+      padding-left: 18%;
+    }
+  }
+}
+
+.r-sidebar {
+  position: fixed;
+  z-index: 1000;
+  @include flex(column);
+  top: 0;
+  right: -450px;
+  width: 100%;
+  max-width: 350px;
+  height: 100%;
+  background-color: $white;
+  border-left: $division;
+  box-shadow: $shadow-1;
+  transition: 0.25s;
+  & > * {
+    // padding: 25px 15px;
+  }
+  & > .rs-title {
+    @include flex(row, center, space-between);
+    padding: 0.2em 0.6em;
+    flex-shrink: 0;
+    & > img {
+      height: 16px;
+      cursor: pointer;
+    }
+  }
+  & > .rs-tabs {
+    @include flex(row, stretch);
+    padding: 0;
+    border-top: $division-big;
+    border-bottom: $division-big;
+    & > .t2-tab {
+      width: 50%;
+    }
+  }
+  & > .rs-body {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    flex: 1;
+
+    & > .rs-body-content {
+      flex:1;
+      padding: 25px 15px;
+    }
+
+    & > .input2-1 {
+      margin-bottom: 0.5rem;
+    }
+  }
+  & > .rs-action-wrapper {
+    @include flex(row, stretch, flex-end);
+    padding: 0.6em;
+    border-top: $division;
+    & > * {
+      margin-right: 0.5rem;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+  &.-selected {
+    right: 0;
+  }
+}
+
+.t2-tab {
+  position: relative;
+  @include flex(row, center, center);
+  padding: 20px;
+  border-right: $division-big;
+  background-color: $bg;
+  color: $division-color;
+  @include transition(0.25s);
+  &:last-child {
+    border-right: none;
+  }
+  &:hover {
+    background-color: darken($bg, 2.5%);
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: $purple;
+    transition: 0.25s;
+  }
+  &.-selected {
+    background-color: $light-purple;
+    color: $purple;
+    &::after {
+      height: 5px;
+    }
+  }
+}

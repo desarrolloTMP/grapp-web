@@ -1,0 +1,39 @@
+<div class="input2-1" style="margin-bottom: 1rem;">
+
+  <label>
+    <input
+      #input
+      [formControl]="formControl"
+      [formlyAttributes]="field"
+      [type]="to.type"
+      [attr.step]="to.type === 'number' ? 'any' : ''"
+      [style.width]="to['width'] || '100%'"
+      [style.border-color]="showError ? '#f5416f' : ''"
+      (keyup)="closeSuggestion = false; keyup($event)"
+      (focus)="selected = true"
+      (blur)="blur()"
+      [autocomplete]="to['predictions'] ? 'ÑøoComplE123' : 'on'"
+    />
+    <span class="placeholder">{{ to.label }}</span>
+  </label>
+
+  <div *ngIf="to['predictions']" class="predictions" [class.-selected]="selected">
+
+    <label class="input2-checkbox-space" *ngFor="let prediction of to['predictions'] | filter: formControl.value || ''">
+      <input type="checkbox" (click)="selectSuggestion(prediction)" />
+      <span class="checkmark"></span>
+      <p>{{ prediction }}</p>
+    </label>
+
+    <label
+      class="input2-checkbox-space"
+      *ngIf="(to['predictions'] | filter: formControl.value || '').length === 0"
+      (click)="selectSuggestion('')"
+    >
+      <input type="checkbox" />
+      <span class="checkmark"></span>
+      <p>No hay coincidencias</p>
+    </label>
+
+  </div>
+</div>

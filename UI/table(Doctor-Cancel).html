@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="./css/app.css">
+    <link rel="stylesheet" type="text/css" href="./css/modals.css">
+    <link rel="stylesheet" type="text/css" href="./css/tables.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <title>GRAPP</title>
+</head>
+
+<body>
+    <div class="r-sidebar">
+        <div class="rs-title -selected">
+            <p class="txt-bold">Editar tabla</p>
+            <button class="btn2-icon -gray"> <img src="../src/assets/Close-Gray.svg" alt=""> </button>
+        </div>
+        <div class="rs-tabs">
+            <div class="t2-tab -selected txt-bold">Filtros</div>
+            <div class="t2-tab txt-bold">Columnas</div>
+        </div>
+        <div class="rs-body">
+            <div class="input2-1">
+                <label>
+                    <input required> <span class="placeholder">Nombre paciente</span> </label>
+            </div>
+            <div class="input2-1">
+                <label>
+                    <input required> <span class="placeholder">Nombre analista</span> </label>
+            </div>
+            <div class="input2-1">
+                <label>
+                    <input required> <span class="placeholder">Fecha de respuesta</span> </label>
+            </div>
+        </div>
+        <div class="rs-action-wrapper">
+            <button class="btn2-1 -gray">Cancelar</button>
+            <button class="btn2-1">Aceptar</button>
+        </div>
+    </div>
+    <div class="modal-space -selected">
+        <div class="modal2-1">
+            <div class="m21-title-wrapper">
+                <div class="m21-title"> <img src="../src/assets/Document.svg" alt="">
+                    <div class="m21-title-txt">
+                        <h2 class="txt-bold">Orden #5646846</h2>
+                        <!--                        Usar -red -orange -purple -->
+                        <div class="t2-label -red">5 días restantes / 10 de Noviembre, 201</div>
+                    </div>
+                </div>
+                <button class="btn2-icon -gray"> <img src="../src/assets/Close-Gray.svg" alt=""> </button>
+            </div>
+            <div class="m21-body">
+                <div class="m21-col -flex-wrap">
+                    <div class="m21-preview"></div>
+                    <div class="m21-patient-brief">
+                        <div>
+                            <p class="txt-bold">Nombre paciente</p>
+                            <p class="txt-small">Felipe Gallego</p>
+                        </div>
+                        <div>
+                            <p class="txt-bold">Dirección</p>
+                            <p class="txt-small">Calle 14#25-20, Bogotá D.C</p>
+                        </div>
+                        <div>
+                            <p class="txt-bold">Teléfono</p>
+                            <p class="txt-small">(+57) 311 528 8213</p>
+                        </div>
+                        <button class="btn2-1 -outline">Ver más detalles</button>
+                    </div>
+                </div>
+                <div class="m21-col">
+                    <div class="m21-module">
+                        <div class="input2-radio-space">
+                            <p>¿Autoriza?</p>
+                            <div class="input2-radio-wrapper">
+                                <label class="input2-radio">
+                                    <input type="radio"  name="radio2"> <span class="checkmark"><p>Si</p></span> </label>
+                                <label class="input2-radio">
+                                    <input type="radio" checked="checked" name="radio2"> <span class="checkmark"><p>No</p></span> </label>
+                            </div>
+                        </div>
+                        <div class="input2-1 -txtarea">
+                            <label>
+                                <textarea required></textarea> <span class="placeholder">Justificación</span> </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m21-action-wrapper">
+                <button class="btn2-1 -gray">Cancelar</button>
+                <button class="btn2-1">Aceptar</button>
+            </div>
+        </div>
+    </div>
+    <div class="body-wrapper">
+        <div class="table-2">
+            <div class="t2-header">
+                <div class="t2-brief">
+                    <div class="t2-title-wrapper">
+                        <h2 class="txt-bold">Juan Daniel Restrepo Ácila</h2>
+                        <div class="t2-label-wrapper">
+                            <div class="t2-label -filter"> María Daniela García Pratt <img src="../src/assets/Close.svg" alt=""> </div>
+                            <div class="t2-label -filter"> 12/05/2018 - 12/05/2019 <img src="../src/assets/Close.svg" alt=""> </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="t2-action-wrapper">
+                    <div class="input2-1 -icon -search">
+                        <label>
+                            <input required> <span class="placeholder">Buscar</span> </label>
+                    </div>
+                    <button class="btn2-1">Importar órdenes</button>
+                    <button class="btn2-icon -outline"><img src="../src/assets/Filter.svg" alt=""></button>
+                </div>
+            </div>
+            <div class="t2-row -header">
+                <div class="t2-cell -header txt-bold"> Nombre paciente </div>
+                <div class="t2-cell -header txt-bold"> Fecha Ingreso </div>
+                <div class="t2-cell -header txt-bold"> Fecha Máx. respuesta </div>
+            </div>
+            <div class="t2-row -red">
+                <div class="t2-cell -red">Juan Silva Miranda</div>
+                <div class="t2-cell">10 de Octubre, 2019</div>
+                <div class="t2-cell">
+                    <div class="progress-bar -red">
+                        <div class="percentage-txt"> <span>5 días restates </span> / 10 de Noviembre, 2019 </div>
+                        <div class="percentage-bar"> <span></span> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="t2-row -orange">
+                <div class="t2-cell -orange">Juan Silva Miranda</div>
+                <div class="t2-cell">10 de Octubre, 2019</div>
+                <div class="t2-cell">
+                    <div class="progress-bar -orange">
+                        <div class="percentage-txt"> <span>8 días restates </span> / 13 de Noviembre, 2019 </div>
+                        <div class="percentage-bar"> <span></span> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="t2-row">
+                <div class="t2-cell">Juan Silva Miranda</div>
+                <div class="t2-cell">10 de Octubre, 2019</div>
+                <div class="t2-cell">
+                    <div class="progress-bar">
+                        <div class="percentage-txt"> <span>10 días restates </span> / 15 de Noviembre, 2019 </div>
+                        <div class="percentage-bar"> <span></span> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="t2-row">
+                <div class="t2-cell">Juan Silva Miranda</div>
+                <div class="t2-cell">10 de Octubre, 2019</div>
+                <div class="t2-cell">
+                    <div class="progress-bar">
+                        <div class="percentage-txt"> <span>10 días restates </span> / 15 de Noviembre, 2019 </div>
+                        <div class="percentage-bar"> <span></span> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="t2-row">
+                <div class="t2-cell">Juan Silva Miranda</div>
+                <div class="t2-cell">10 de Octubre, 2019</div>
+                <div class="t2-cell">
+                    <div class="progress-bar">
+                        <div class="percentage-txt"> <span>10 días restates </span> / 15 de Noviembre, 2019 </div>
+                        <div class="percentage-bar"> <span></span> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="t2-row">
+                <div class="t2-cell">Juan Silva Miranda</div>
+                <div class="t2-cell">10 de Octubre, 2019</div>
+                <div class="t2-cell">
+                    <div class="progress-bar">
+                        <div class="percentage-txt"> <span>10 días restates </span> / 15 de Noviembre, 2019 </div>
+                        <div class="percentage-bar"> <span></span> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

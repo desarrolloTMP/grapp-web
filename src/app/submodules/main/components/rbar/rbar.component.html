@@ -1,0 +1,53 @@
+<div class="r-sidebar" [class.-selected]="rbarEvent">
+
+  <div class="rs-title">
+    <p class="txt-bold">Editar tabla</p>
+    <button class="btn2-icon -gray" (click)="close()"> <img src="/assets/Close-Gray.svg" alt="" /> </button>
+  </div>
+
+  <div class="rs-tabs" *ngIf="checkOptions()">
+    <div class="t2-tab txt-bold" [class.-selected]="tabSelected === 0" (click)="tabSelected = 0"> Filtros</div>
+    <div class="t2-tab txt-bold" [class.-selected]="tabSelected === 1" (click)="tabSelected = 1">Columnas</div>
+  </div>
+
+  <div class="rs-body" [ngSwitch]="tabSelected">
+
+    <div class="rs-body-content">
+
+      <ng-template [ngSwitchCase]="0">
+
+        <ngx-3a-forms-basic
+          #form
+          [fields]="filterFields"
+          [model]="filterModel"
+        ></ngx-3a-forms-basic>
+      </ng-template>
+
+      <ng-template [ngSwitchCase]="1">
+
+        <ngx-3a-forms-basic
+          [fields]="columnOptions"
+          [model]="columnModel"
+        ></ngx-3a-forms-basic>
+      </ng-template>
+    </div>
+
+  </div>
+
+  <div class="rs-action-wrapper">
+    <button
+      class="btn2-1 -gray"
+      (click)="close()"
+    >
+      Cancelar
+    </button>
+
+    <button
+      class="btn2-1"
+      (click)="handleAction(rbarEvent.confirmation)"
+    >
+      Aceptar
+    </button>
+
+  </div>
+</div>

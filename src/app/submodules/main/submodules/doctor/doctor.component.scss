@@ -1,0 +1,10 @@
+.doctor-component {
+  ngx-3a-datatable {
+
+    ::ng-deep {
+      .progress-bar {
+        min-width: auto;
+      }
+    }
+  }
+}

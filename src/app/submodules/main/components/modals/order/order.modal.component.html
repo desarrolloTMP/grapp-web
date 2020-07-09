@@ -1,0 +1,394 @@
+<div class="modal2-1 order-modal">
+  <div class="m21-title-wrapper">
+    <div class="m21-title" *ngIf="order && order.expirationDate; else noDate">
+      <img src="/assets/Document.svg" alt="" />
+      <div class="m21-title-txt">
+        <h2 class="txt-bold">Orden de solicitud</h2>
+        <div class="t2-label -red" [class.-orange]="diffDays(order.expirationDate) < 7" [class.-red]="diffDays(order.expirationDate) < 3">
+          {{ diffDays(order.expirationDate) }} días restantes / {{ order.expirationDate | momentFormat: 'DD [de] MMMM, YYYY' }}</div
+        >
+      </div>
+    </div>
+    <ng-template #noDate>
+      <div class="m21-title">
+        <img src="/assets/Document.svg" alt="" />
+        <div class="m21-title-txt">
+          <h2 class="txt-bold">Orden de solicitud</h2>
+          <div class="t2-label">No tiene fecha de cumplimiento</div>
+        </div>
+      </div>
+    </ng-template>
+    <button class="btn2-icon -gray" (click)="cancel()"> <img src="/assets/Close-Gray.svg" alt="" /> </button>
+  </div>
+  <div class="m21-body">
+    <div class="m21-col -small -flex-wrap">
+      <div class="m21-timeline">
+        <!-- SEGUNDO STEP -->
+        <ng-template [ngIf]="req && req.imported">
+          <div class="m21-step -checked"></div>
+          <div class="m21-step-txt">
+            <p class="txt-bold">Orden importada</p>
+            <p class="txt-small">{{ req.createdAt | momentFormat: 'DD [de] MMMM, YYYY' }}</p>
+          </div>
+      </ng-template>
+        <!-- !SEGUNDO STEP -->
+
+        <!-- PRIMER STEP -->
+        <ng-template [ngIf]="order && order.authorizationDate">
+          <div class="m21-step -checked"></div>
+          <div class="m21-step-txt">
+            <p class="txt-bold">Orden aprobada</p>
+            <p class="txt-small">{{ order.authorizationDate | momentFormat: 'DD [de] MMMM, YYYY' }}</p>
+          </div>
+        </ng-template>
+        <!-- !PRIMER STEP -->
+
+        <!-- TERCER STEP -->
+        <ng-template [ngIf]="order">
+          <div
+            class="m21-step -checked"
+            [ngClass]="{ '-checked': order.agenda && order.agenda.length, '-next': !order.agenda || !order.agenda.length }"
+          >
+        </div>
+          <div class="m21-step-txt" *ngIf="order.authorizationDate; else noAgenda">
+            <p class="txt-bold"
+            >Cita {{ isGeneralState(2) ? 'Cancelada' : isState(1) ? 'Agendada' : isState(3) ? 'no atendida' : 'Pendiente' }}</p
+            >
+            <p class="txt-small">{{ order.agenda ? order.agenda.length : '0' }} / 3 Intentos</p>
+          </div>
+          <ng-template #noAgenda>
+            <div class="m21-step-txt">
+              <p class="txt-bold">Pendiente de revisión</p>
+              <p class="txt-small">No ha sido revisada por un analista</p>
+            </div>
+          </ng-template>
+        </ng-template>
+        <!-- !TERCER STEP -->
+
+        <!-- CUARTO STEP -->
+        <ng-template [ngIf]="order">
+            <div
+            class="m21-step "
+            [ngClass]="{ '-checked': isState(2) || isState(3) || isGeneralState(1) || isGeneralState(2), '-next': isGeneralState(0) && order.appointmentDate, '-gray': isState(0) }"
+              >
+            </div>
+          <div class="m21-step-txt " [ngClass]="{ '-gray': isState(0) }" *ngIf="order.appointmentDate; else noAppointment">
+            <p class="txt-bold"
+            >Cita
+            {{
+              isGeneralState(2)
+              ? ''
+              : order.appointmentDate
+              ? ' - ' + (order.appointmentDate | momentFormat: 'DD/MM/YYYY')
+              : isState(3)
+              ? 'no asignada'
+              : ''
+            }}
+            </p>
+            <p class="txt-small">{{ order.appointmentAddress ? order.appointmentAddress : '' }}</p>
+          </div>
+          <ng-template #noAppointment>
+            <div class="m21-step-txt">
+              <p class="txt-bold">Cita</p>
+              <p class="txt-small">Sin asignar</p>
+            </div>
+          </ng-template>
+        </ng-template>
+        <!-- !CUARTO STEP -->
+
+        <ng-template [ngIf]="order">
+          <div class="m21-step"></div>
+          <div class="m21-step-txt " [ngClass]="{ '-gray': isState(0) || isState(1) }">
+            <p class="txt-bold"> {{ order.expirationDate ? (order.expirationDate | momentFormat: 'DD [de] MMMM, YYYY') : 'No tiene fecha de cumplimiento' }}</p>
+          </div>
+        </ng-template>
+        </div>
+      <div class="m21-patient-brief">
+        <div>
+          <p class="txt-bold">Nombre asistente</p>
+          <p class="txt-small">{{ req.createdBy ? req.createdBy.name : "N/R" }}</p>
+        </div>
+        <div>
+          <p class="txt-bold">Fecha de creación</p>
+          <p class="txt-small">{{ ( req.createdAt | momentFormat: 'DD [de] MMMM, YYYY')}}</p>
+        </div>
+        <div>
+          <p class="txt-bold">Nombre gestor</p>
+          <p class="txt-small">{{ req.verifierDoctor ? req.verifierDoctor.name : "N/R" }}</p>
+        </div>
+        <div>
+          <p class="txt-bold">Nombre paciente</p>
+          <p class="txt-small">{{selectedPatient ? selectedPatient.name : req.patient.name}}</p>
+        </div>
+        <div>
+          <p class="txt-bold">Documento</p>
+          <p class="txt-small">{{ req.patient.document }}</p>
+        </div>
+        <div>
+          <p class="txt-bold">Estado de cuenta</p>
+          <p class="txt-small" *ngIf="selectedPatient" [class.-red]="!selectedPatient.active ">{{selectedPatient ? selectedPatient.active ? 'Activo' : 'Inactivo' : 'N/A'}}</p>
+        </div>
+        <ng-template [ngIf]="showPatientDetails">
+          <div *ngIf="req.patient.account">
+            <p class="txt-bold">Número de cuenta</p>
+            <p class="txt-small">#{{ req.patient.account }}</p>
+          </div>
+          <div>
+            <p class="txt-bold">Municipio/Residencia</p>
+            <p class="txt-small">{{ req.patient.address.city }} / {{ selectedPatient ? selectedPatient.address.full : 'N/R' }}</p><!-- , {{ req.patient.address.full }} -->
+          </div>
+          <div>
+            <p class="txt-bold">Teléfono</p>
+            <p class="txt-small">(+57) {{ selectedPatient ? selectedPatient.phone : req.patient.phone }}</p>
+          </div>
+          <div>
+            <p class="txt-bold">Fecha de ingreso</p>
+            <p class="txt-small">{{ req.patient.createdAt | momentFormat: 'DD [de] MMMM, YYYY' }}</p>
+          </div>
+          <div>
+            <p class="txt-bold">Correo de contacto</p>
+            <p class="txt-small">{{ selectedPatient ? selectedPatient.email : req.patient.email }}</p>
+          </div>
+        </ng-template>
+        <button class="btn2-1 -outline" (click)="showPatientDetails = !showPatientDetails">{{
+          showPatientDetails ? 'Ocultar detalles' : 'Ver más detalles'
+        }}</button>
+      </div>
+    </div>
+    <div class="m21-col -flex-wrap right-side">
+      <div class="m21-tabs">
+        <div class="t2-tab" [ngClass]="{ '-selected': selectedTab == 0 }" (click)="selectedTab = 0"> Información general </div>
+        <div
+          class="t2-tab"
+          [ngClass]="{ '-selected': selectedTab == 1 }"
+          (click)="selectedTab = 1; order.agenda = order.agenda || []"
+          *ngIf="order && order.authorizationDate"
+        >
+          Info. de Cita
+        </div>
+        <div class="t2-tab" [ngClass]="{ '-selected': selectedTab == 2 }" (click)="selectedTab = 2"> Trazabilidad </div>
+      </div>
+
+      <ng-container *ngIf="selectedTab == 0">
+        <div class="m21-module">
+          <div class="t2-input-btn-wrapper">
+            <ngx-3a-forms-basic
+              [fields]="fields"
+              [model]="order"
+              (changed)="validateStatusChanged($event)"
+              style="width: 70%"
+            ></ngx-3a-forms-basic>
+            <button class="btn2-1 -dark" (click)="downloadPDF()" [disabled]="req.imported || !downloadBtn.enable" style="max-height: 50px"
+              >{{ req.imported ? 'INTERNA' : downloadBtn.title }}
+            </button>
+          </div>
+          <div class="input2-1">
+            <p class="txt-bold">Autoriza</p>
+            <p class="txt-small" *ngIf="req.verifierDoctor">{{ req.verifierDoctor.name }}</p>
+          </div>
+          <div class="input2-1" *ngIf="order && order.cups">
+            <p class="txt-bold">Procedimiento</p>
+            <p class="txt-small">{{ order.cups.codeDescription }}</p>
+          </div>
+          <div class="input2-1 -txtarea">
+            <p class="txt-bold">Observaciones</p>
+            <p class="txt-small">{{ order.observations ? order.observations : 'Ninguna'}}</p> <!-- {{ req.observations ? req.observations : 'Ninguna' }} -->
+          </div>
+          <div class="input2-1 -txtarea">
+            <p class="txt-bold">No autorización</p>
+            <p class="txt-small">{{ order.noAuthObservations ? order.noAuthObservations : 'Ninguna'}}</p>
+            <!-- {{ req.observations ? req.observations : 'Ninguna' }} -->
+          </div>
+        </div>
+        <div class="m21-module">
+          <div class="m21-module-title">
+            <h3 class="txt-bold">Ejecutores</h3>
+            <button class="btn2-1 -dark" (click)="openExecutors(order)"> Agregar Ejecutor </button>
+          </div>
+          <div class="m21-label-list" *ngIf="order && order.executors">
+            <div class="t2-label -filter" *ngFor="let executor of order.executors">
+              {{ executor.name }} <img src="/assets/Close.svg" alt="" />
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="m21-module" *ngIf="order && order.agenda && selectedTab == 1">
+
+        <div class="m21-module-title">
+          <h3 class="txt-bold">Citas</h3>
+
+          <button
+            class="btn2-1 -dark"
+            [ngClass]="{
+                          '-disabled': !isAllowedAddCall
+                          ? order.agenda.length == 3 || isGeneralState(2)
+                          : isGeneralState(2) ? true : false
+                       }"
+            (click)="callModal()"
+            [disabled]="!isAllowedAddCall"
+          >
+            Agregar Llamada
+          </button>
+        </div>
+
+        <div
+          class="call-log"
+          [ngClass]="{
+            '-red': call.state !== agendaEventStatus.SUCCESSFUL,
+            'enabled':call.state === agendaEventStatus.SUCCESSFUL
+          }"
+          *ngFor="let call of order.agenda; let i = index"
+          (click)="callModal(i)"
+        >
+          <div class="cl-small">Llamada # {{ i + 1 }}</div>
+          <div class="cl-small">{{ call.date | momentFormat: 'DD [de] MMMM, YYYY' }}</div>
+          <div class="cl-small observations" [title]="call.observations ? call.observations : ' '">
+            {{ call.observations ? (call.observations | slice:0:150) + '...' : ' '  }}
+          </div>
+          <div class="cl-small">{{ call.state }}</div>
+
+          <ng-container *ngIf="call.state === agendaEventStatus.SUCCESSFUL">
+            <div
+              style="display: flex; border-top: 1px solid #a77bca; width: 100%"
+            >
+
+              <div class="cl-small" style="border-top: none;" *ngIf="order && order.appointmentDate">
+                <div>
+                  <p class="txt-bold">Fecha de Cita</p>
+                  <p>
+                    {{ call.appointmentDate | momentFormat: 'DD [de] MMMM' }}
+                    {{ call['appointmentTime'] || 'N/A (No se ha especificado hora)' }}
+                  </p>
+                </div>
+              </div>
+
+              <div class="cl-big" style="border-top: none;">
+                <div>
+                  <p class="txt-bold">Dirección de Cita</p>
+                  <p>{{ call.appointmentAddress }}</p>
+                </div>
+              </div>
+
+              <div class="cl-big" style="border-top: none;"  *ngIf="call && call.answeredBy">
+                <div>
+                  <p class="txt-bold">Nombre quien acepta</p>
+                  <p>{{ call.answeredBy.name }}</p>
+                </div>
+              </div>
+
+              <div class="cl-big" style="border-top: none;"  *ngIf="call && call.answeredBy">
+                <div>
+                  <p class="txt-bold">Parentesco</p>
+                  <p>{{ call.answeredBy.relation }}</p>
+                </div>
+              </div>
+
+              <div class="cl-big -cell-content-center" style="border-top: none;"  *ngIf="call && call.answeredBy">
+
+              <button
+                class="btn2-1 -rose"
+                (click)="onCancelAppointment( $event, i )"
+                [disabled]="call.state === agendaEventStatus.CANCELED"
+              >
+                Cancelar cita
+              </button>
+            </div>
+
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <ng-container *ngIf="selectedTab == 2">
+
+        <div class="m21-upload" *ngIf="fileData">
+          <span class="m22-upload-progress"></span>
+          <p
+            ><span class="txt-bold">{{ fileData.name }}</span></p
+          >
+          <button class="btn2-icon -gray" (click)="resetFile()" style=" z-index: 1;">
+            <img src="/assets/Close.svg" alt="" />
+          </button>
+        </div>
+
+        <!-- Traceability Information Card -->
+        <div class="m21-module -big" *ngIf="order && order.comments">
+
+          <div class="m21-comment" *ngFor="let comment of order.comments">
+
+            <div class="header-group">
+              <div class="m21-comment-author-wrapper">
+                <div class="m21-comment-author">
+                  <div class="m21-comment-author-label txt-bold"> {{ getInitials(comment.sender.name).toUpperCase() }} </div>
+                  <div class="m21-comment-author-txt">
+                    <p>
+                      <span class="txt-bold">{{ comment.sender.name }}</span> le escribió a
+                      <span class="txt-bold">{{ comment.destinatary.name }}</span>
+                    </p>
+                    <p class="txt-small">{{ comment.date | momentFormat: 'DD/MM/YYYY' }}</p>
+                  </div>
+                </div>
+
+                <ng-container *ngIf="comment.file">
+                  <div class="t2-label -filter" *ngIf="requestFile(comment.file) | async as context">
+                    <a (click)="openFile( context.data )">{{ context.name }}</a
+                      ><img src="/assets/Comment-Attach.svg" alt="" />
+                  </div>
+                </ng-container>
+
+              </div>
+              <p>{{ comment.content + '.' }}</p>
+
+            </div>
+
+
+            <div class="footer-group" *ngIf="comment.observations">
+              <hr>
+              <div class="footer-content">
+                <p class="txt-bold">Observaciones:</p>
+                <p>{{ comment.observations }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="m21-comment-space">
+          <ngx-3a-forms-basic #form [fields]="fieldsMessage" [model]="currentMessage" (submit)="verifyMessage($event)">
+          </ngx-3a-forms-basic>
+          <button class="btn21-icon -gray" (click)="myInputFile.click()"> <img src="/assets/New-Comment-Attach.svg" alt="" /> </button>
+          <button type="submit" class="btn21-icon -gray" (click)="this.basicForm.send(true)"> <img src="/assets/Send-Comment.svg" alt="" /> </button>
+          <input (change)="fileChangeEvent($event.target.files)" style="display: none;" type="file" #myInputFile />
+        </div>
+
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="m21-action-wrapper">
+    <button class="btn2-1 -gray" (click)="cancel()">Cancelar</button>
+    <button class="btn2-1" (click)="confirm(order)">Guardar</button>
+  </div>
+
+</div>
+
+<div class="modal-space" [class.-selected]="visible">
+
+  <app-call-modal
+    *ngIf="event && event.type === 8"
+    [openCancelView]="store?.openCallModalCanceled"
+    [_agendaEvent]="event.payload"
+    (confirmed)="handleAction(event.confirmation, $event)"
+    (canceled)="handleAction(event.cancelation); event = undefined"
+    (click)="$event.stopPropagation()"
+  >
+  </app-call-modal>
+
+  <app-executors-modal
+    *ngIf="event && event.type === 7"
+    [order]="event.payload"
+    (confirmed)="handleAction(event.confirmation, $event)"
+    (canceled)="handleAction(event.cancelation); event = undefined"
+    (click)="$event.stopPropagation()"
+  ></app-executors-modal>
+</div>

@@ -1,0 +1,24 @@
+@import '~src/styles/partials/_variables';
+@import '~src/styles/partials/_mixins';
+.predictions {
+  background-color: white;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 0;
+  max-height: 250px;
+  overflow: scroll;
+  z-index: 5;
+  padding: 1% 0;
+  box-shadow: $shadow-1;
+  pointer-events: none;
+  border: $division;
+  border-radius: 0 0 10px 10px;
+  @include transition(0.25s);
+
+  &.-selected {
+    opacity: 1;
+    height: auto;
+    pointer-events: all;
+  }
+}

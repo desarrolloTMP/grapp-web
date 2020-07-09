@@ -1,0 +1,123 @@
+button {
+  @include transition(0.25s);
+}
+
+.btn2-1 {
+  padding: 10px 24px;
+  color: $white;
+  background-color: $purple;
+  border-radius: 5px;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: $dark-purple;
+  }
+
+  &.-outline {
+    background-color: rgba($light-purple, 0);
+    color: $purple;
+    border: 1px solid $purple;
+    &:hover {
+      background-color: rgba($light-purple, 1);
+    }
+  }
+
+  &.-dark {
+    background-color: $dark-purple;
+    &:hover {
+      background-color: lighten($dark-purple, 15%);
+    }
+  }
+
+  &.-gray {
+    background-color: rgba($bg, 0);
+    color: $division-color;
+    &:hover {
+      background-color: rgba($bg, 1);
+    }
+  }
+
+  &.-rose{
+    background-color: $red;
+    &:hover {
+      background-color: darken($red, 15%);
+    }
+  }
+
+  &.-rightRose{
+    background-color: $red;
+
+    &:hover {
+      background-color: darken($red, 15%);
+    }
+  }
+
+  & > img {
+    height: 1rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+
+}
+
+.btn2-icon {
+  @include flex(row, center, center);
+  width: 45px;
+  height: 45px;
+  background-color: $purple;
+  border-radius: 5px;
+  overflow: hidden;
+  & > img {
+    height: 40%;
+  }
+  &:hover {
+    background-color: $dark-purple;
+  }
+  &.-outline {
+    background-color: rgba($light-purple, 0);
+    color: $purple;
+    border: 1px solid $purple;
+    &:hover {
+      background-color: rgba($light-purple, 1);
+    }
+  }
+  &.-gray {
+    background-color: rgba($bg, 0);
+    &:hover {
+      background-color: rgba($bg, 1);
+    }
+  }
+  &.-red {
+    background-color: $light-red;
+    &:hover {
+      background-color: darken($light-red, 5%);
+    }
+  }
+}
+
+.btn2-1.-disabled,
+.btn2-icon.-disabled,
+.btn2-1[disabled] {
+  opacity: 0.5;
+  cursor: no-drop;
+}
+
+.btn2-2 {
+  padding: 5px 10px;
+  border: $division;
+  border-radius: 25px;
+  &:hover {
+    background-color: $dark-gray;
+  }
+}
+
+.btn-3 {
+  @include flex(row, center, center);
+  width: 45px;
+  height: 45px;
+  border: $division;
+  border-radius: 5px;
+  & > svg {
+    height: 50%;
+  }
+}

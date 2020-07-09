@@ -1,0 +1,6 @@
+@import '~src/styles/partials/_variables';
+::ng-deep {
+  & .input-1 > input:focus {
+    border-color: $purple !important;
+  }
+}

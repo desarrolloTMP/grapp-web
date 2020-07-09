@@ -1,0 +1,129 @@
+<div class="modal2-1 -small request-modal">
+
+  <div class="m21-title-wrapper">
+
+    <!-- Header Modal -->
+    <div class="m21-title">
+      <img src="/assets/Document.svg" alt="" />
+      <div class="m21-title-txt">
+        <h2 class="txt-bold">Solicitud de ingreso</h2>
+      </div>
+    </div>
+
+    <!-- X Icon Close Modal -->
+    <button
+      class="btn2-icon -gray"
+      (click)="cancel()"
+    >
+      <img src="/assets/Close-Gray.svg" alt="" />
+    </button>
+  </div>
+
+  <!-- Body Modal -->
+  <div class="m21-body -column">
+    <div class="m21-module">
+
+      <ngx-3a-forms-basic
+        #form
+        [model]="request"
+        [fields]="fields"
+        (submit)="verifyData($event)"
+        ></ngx-3a-forms-basic>
+
+      <!-- Files Group Section -->
+      <div *ngIf="request.completeSupports">
+
+        <!-- Files Actions Row -->
+        <div class="m21-module-action-wrapper" *ngIf="!loadingDownloadFiles">
+
+          <button
+            class="btn2-icon -red"
+            *ngIf="!loadingDownloadFiles && files.length > 0"
+            (click)="onClickTrashFiles()"
+          >
+            <img alt="" src="/assets/Trash.svg">
+          </button>
+
+          <label for="file-upload" class="btn2-1 -dark">
+            <img _ngcontent-serverapp-c9="" alt="" src="/assets/Attach.svg">
+            Adjuntar (Peso máx. 30MB)
+          </label>
+
+          <input
+            id="file-upload"
+            type="file"
+            style='display: none;'
+            type="file"
+            (change)="fileChangeEvent($event)"
+            #fileInput
+            multiple
+            class="pt-2"
+          >
+
+        </div>
+
+        <br/>
+
+        <!-- Files Card Row -->
+        <ng-container *ngIf="!loadingDownloadFiles; else smallLoadingPlaceholder">
+          <!-- Card Files -->
+          <div class="input2-error-space" *ngIf="files.length > 0">
+            <div class="input2-error" *ngFor="let file of files; let i=index">
+               <p [title]="file.name" class="p-dotdotdot">{{ file.name }}</p>
+              <img
+                class="close-icon"
+                alt="close"
+                src="/assets/Close-Gray.svg"
+                (click)="onDeleteFile(i)"
+              >
+            </div>
+          </div>
+        </ng-container>
+
+      </div>
+
+
+      <div class="input2-error-space no-dot" *ngIf="alert && !loadingDownloadFiles">
+        <div class="input2-error">
+          <p [title]="alert" class="">{{ alert }}</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer Modal -->
+  <div class="m21-action-wrapper">
+
+    <!-- Cancel Button -->
+    <button
+      type="button"
+      (click)="cancel()"
+      class="btn2-1 -gray"
+      [disabled]="loadingDownloadFiles"
+    >Cancelar</button>
+
+    <!-- Save Button    
+    [disabled]="loadingDownloadFiles || form._form.status === 'INVALID'"
+    
+    -->
+    <button
+      type="button"
+      class="btn2-1 -dark"
+      (click)="onSubmit()"
+      
+    >
+      {{  request.id?'Guardar':'Crear solicitud'}}
+    </button>
+  </div>
+
+  <!-- Templates -->
+  <ng-template #smallLoadingPlaceholder>
+    <div
+      class="t2-cell-img"
+      [style.backgroundImage]="'url(/assets/loading-placeholder.gif)'"
+      style="margin: 0 auto"
+    ></div>
+  </ng-template>
+
+</div>

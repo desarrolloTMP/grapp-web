@@ -1,0 +1,16 @@
+<div class="me-title">
+  <h3>{{ to.label }}</h3>
+  <div class="input2-1 -icon -search" *ngIf="to['useSelector']">
+    <label> <input [value]="query" (keyup)="query = $event.target.value; keyup($event)" /> <span class="placeholder">Buscar</span> </label>
+  </div>
+</div>
+<ng-template ngIf let-ro [ngIf]="options$ | async" [ngIfElse]="empty">
+  <label class="input2-checkbox-space" *ngFor="let option of ro | filter: query">
+    <input type="checkbox" [checked]="containsOption(option)" (change)="toogleSelection(option)" /> <span class="checkmark"></span>
+    <p>{{ option.label }}</p>
+  </label>
+</ng-template>
+<ng-template #empty>
+  <div class="txt absolute-center light-color bold">{{ to['emptyMessage'] }}</div>
+</ng-template>
+<br />

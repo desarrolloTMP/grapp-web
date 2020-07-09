@@ -1,0 +1,11 @@
+<div class="m21-module-action-wrapper">
+
+  <input #original type="file" class="inputfile" (change)="fileUpdates($event.target.files)"
+    [multiple]="to['multiple'] || false" [accept]="to.accept || undefined" />
+
+  <button class="btn2-icon -red" (click)="clear()"><img src="/assets/Trash.svg" alt="" /></button>
+  <button class="btn2-1 -dark" type="button" (click)="original.click()">
+    <img src="/assets/Attach.svg" alt="" />
+    {{ model[key] && model[key].length > 0 ? model[key][0].name : to.label }}
+  </button>
+</div>

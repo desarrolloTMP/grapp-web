@@ -1,0 +1,58 @@
+<div
+  class="table-2 doctor-component"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  infiniteScrollContainer=".body-wrapper"
+  [fromRoot]="true"
+  (scrolled)="loadMoreData()"
+>
+  <div class="t2-header">
+    <div class="t2-brief" *ngIf="currentDoctor">
+      <div class="t2-title-wrapper">
+        <h2 class="txt-bold">{{ currentDoctor.name }}</h2>
+        <div class="t2-label-wrapper">
+          <ng-container *ngFor="let filter of filtersApplied; let i = index">
+            <div class="t2-label -filter" (click)="removeFilter(i)">
+              {{ displayFilterLabel(filter) }} <img src="/assets/Close.svg" alt="" />
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="t2-action-wrapper">
+      <div class="input2-1 -icon -search">
+        <label> <input required [(ngModel)]="filter_text" /> <span class="placeholder">Buscar</span> </label>
+      </div>
+      <button class="btn2-icon -outline" (click)="openRBarFromTableData()"><img src="/assets/Filter.svg" alt=""/></button>
+    </div>
+  </div>
+
+  <ngx-3a-datatable
+    *ngIf="datatableOptions"
+    [filter]="filter_text"
+    [datatableOptions]="datatableOptions"
+    (rowClicked)="openRequest($event)"
+  >
+  </ngx-3a-datatable>
+
+</div>
+
+<ng-template #dateTemplate let-value="value" let-row="row">
+
+  <div [ngClass]="diffDaysBar(row)" *ngIf="row.status===0; else row.status===4 ? noAuth : auth"> <!-- !row.order.isAuthorized; else elseTemplate -->
+    <div class="percentage-txt">
+      <span>{{ diffDays(row) }} </span>
+    </div>
+    <div class="percentage-bar"> <span [style.width.%]="diffDaysPercentage(value)"></span> </div>
+  </div>
+</ng-template>
+
+
+<ng-template #auth >
+  <label>Autorizada</label>
+</ng-template>
+
+<ng-template #noAuth>
+  <label>No autorizada</label>
+</ng-template>

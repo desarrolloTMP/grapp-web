@@ -1,0 +1,53 @@
+//General Style
+html,
+body,
+.body-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.body-wrapper {
+  padding: 15px;
+}
+
+body {
+  background-color: $bg;
+  font-size: 100%;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: $font;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: 0;
+}
+
+//Remove of Styles
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+button,
+input[type='submit'],
+input[type='reset'],
+input,
+select,
+a {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  outline: none;
+}
+

@@ -1,0 +1,39 @@
+<div class="modal2-1 -small">
+  <div class="m21-title-wrapper">
+    <div class="m21-title">
+      <img src="/assets/Document.svg" alt="" />
+      <div class="m21-title-txt">
+        <h2 class="txt-bold">{{ patient.name || 'Agregar paciente' }}</h2>
+      </div>
+    </div>
+    <button class="btn2-icon -gray" (click)="cancel()"> <img src="/assets/Close-Gray.svg" alt="" /> </button>
+  </div>
+  <div class="m21-body -column">
+    <div class="m21-module">
+      <ngx-3a-forms-basic
+        #form
+        [model]="patient"
+        [fields]="fields"
+        (submit)="confirm($event)"
+        (changed)="changed.next($event)"
+      ></ngx-3a-forms-basic>
+      <div
+        class="input2-error-space"
+        *ngIf="patient && patient.document && patient.document['original'] !== patient.document['confirmation']"
+      >
+        <div class="input2-error">
+          Los documentos no coinciden
+        </div>
+      </div>
+      <div class="input2-error-space" *ngIf="patient && patient.document && documentExists">
+        <div class="input2-error">
+          Ya existe un paciente registrado con ese documento
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="m21-action-wrapper">
+    <button type="button" (click)="cancel()" class="btn2-1 -gray">Cancelar</button>
+    <button type="button" class="btn2-1" (click)="submit()">Guardar paciente</button>
+  </div>
+</div>

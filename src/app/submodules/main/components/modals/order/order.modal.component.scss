@@ -1,0 +1,57 @@
+.order-modal {
+  .m21-body {
+    overflow: auto;
+
+    .right-side {
+      .m21-module {
+        flex: 1;
+        overflow: auto;
+      }
+
+      .-cell-content-center {
+        flex-grow: 1;
+        align-self: center;
+        justify-self: center;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
+  .modal-space * {
+    width: 100%;
+    height: 100%;
+  }
+
+  .call-log{
+    .cl-small{
+      &.observations{
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+
+  // Traceability Information Card
+  .m21-comment {
+    padding: 15px 0;
+
+    .header-group{
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    .footer-group{
+      padding-top: 1rem;
+      .footer-content{
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-top: 0.5rem;
+      }
+
+      hr{
+        border-color: #fff;
+      }
+    }
+  }
+}
